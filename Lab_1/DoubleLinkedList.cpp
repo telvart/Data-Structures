@@ -77,6 +77,7 @@ void DoubleLinkedList::deleteRec(int num, Node* start)
     std::cout<<"That value was not in the list";
     return;
   }
+
   if(start->getData() == num)
   {
     if(start == m_front)
@@ -99,7 +100,6 @@ void DoubleLinkedList::deleteRec(int num, Node* start)
       start->getNext()->setPrev(start->getPrev());
       delete start;
     }
-
     m_size--;
     return;
   }
@@ -119,17 +119,23 @@ void DoubleLinkedList::print()
   std::cout<<"\n";
   return;
 }
+
 void DoubleLinkedList::reverse()
 {
   reverseRec(nullptr,m_front);
 }
 
+
+//TODO FIX POINTER MANIPULATION WITH PREV AND HEAD AND TAIL
 void DoubleLinkedList::reverseRec(Node* prev, Node* curr)
 {
   if(curr != nullptr)
   {
     reverseRec(curr, curr->getNext());
+    curr->setPrev(curr->getNext());
     curr->setNext(prev);
+
+
   }
   else
   {
@@ -141,28 +147,3 @@ bool DoubleLinkedList::isEmpty()
 {
   return m_front==nullptr;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//
