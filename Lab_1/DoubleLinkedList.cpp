@@ -6,6 +6,7 @@ DoubleLinkedList::DoubleLinkedList()
   m_front = nullptr;
   m_rear = nullptr;
 }
+
 DoubleLinkedList::~DoubleLinkedList()
 {
   Node* temp;
@@ -16,6 +17,7 @@ DoubleLinkedList::~DoubleLinkedList()
     m_front = temp;
   }
 }
+
 void DoubleLinkedList::insert(int num)
 {
   if(isEmpty())
@@ -33,24 +35,9 @@ void DoubleLinkedList::insertRec(int num, Node* start)
 {
   if(start->getData() == num)
   {
-    if(start == m_rear)
-    {
-      Node* temp = new Node(num);
-      start->setNext(temp);
-      temp->setPrev(start);
-      m_rear = temp;
-      m_size++;
-      return;
-    }
-    Node* temp = new Node(num);
-    temp->setNext(start->getNext());
-    temp->setPrev(start);
-    start->setNext(temp);
-    temp->getNext()->setPrev(temp);
-    m_size++;
     return;
   }
-  if(start == m_rear)
+  if(start == m_rear && start->getData() != num)
   {
     Node* temp = new Node(num);
     start->setNext(temp);
@@ -125,10 +112,48 @@ void DoubleLinkedList::print()
 }
 void DoubleLinkedList::reverse()
 {
+  reverseRec(nullptr,m_front);
+}
 
+void DoubleLinkedList::reverseRec(Node* prev, Node* curr)
+{
+  if(curr)
+  {
+    reverseRec(curr, curr->getNext());
+    curr->setNext(prev);
+  }
+  else
+  {
+    m_front = prev;
+  }
 }
 
 bool DoubleLinkedList::isEmpty()
 {
-  return m_front==nullptr && m_rear==nullptr;
+  return m_front==nullptr;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//

@@ -22,7 +22,7 @@ private:
 
   void insertRec(int num, Node* start);
   void deleteRec(int num, Node* start);
-  void insertBack(int num);
+  void reverseRec(Node* prev, Node* curr);
 
 
   int m_size;
