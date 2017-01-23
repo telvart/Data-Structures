@@ -16,11 +16,11 @@ DoubleLinkedList* createDLLfromFile(std::string fileName)
 {
   std::ifstream fileIn(fileName);
   int numData = 11; //number of integers in data.txt
+  int value;
   DoubleLinkedList* DLL = new DoubleLinkedList();
 
   for(int i=0; i<numData; i++)
   {
-    int value;
     fileIn>>value;
     DLL->insert(value);
   }
