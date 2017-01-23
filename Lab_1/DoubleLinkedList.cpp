@@ -68,6 +68,27 @@ void DoubleLinkedList::deleteRec(int num, Node* start)
     //TODO check edge cases and change pointer manipulation
     //start->getPrev()->setNext(start->getNext());
     //start->getNext()->setPrev(start->getPrev());
+    if(start == m_front)
+    {
+      Node* temp = m_front;
+      m_front = m_front->getNext();
+      m_front->setPrev(nullptr);
+      delete temp;
+    }
+    else if(start == m_rear)
+    {
+      Node* temp = m_rear;
+      m_rear = m_rear->getPrev();
+      m_rear->setNext(nullptr);
+      delete temp;
+    }
+    else
+    {
+      start->getPrev()->setNext(start->getNext());
+      start->getNext()->setPrev(start->getPrev());
+      delete start;
+    }
+
     m_size--;
     return;
   }
