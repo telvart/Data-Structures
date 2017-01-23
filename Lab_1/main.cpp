@@ -59,5 +59,6 @@ int main()
       DLL->print();
     }
   }while(choice != 5);
+  delete DLL;
   return 0;
 }
