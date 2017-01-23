@@ -1,3 +1,11 @@
+/**
+*	@file: DoubleLinkedList.cpp
+*	@author: Tim Elvart
+*	@email: telvart@ku.edu
+*	@date: 2017.1.23
+*	@brief: implementation of methods declared in DoubleLinkedList.h
+*/
+
 #include "DoubleLinkedList.h"
 
 DoubleLinkedList::DoubleLinkedList()
@@ -102,6 +110,7 @@ void DoubleLinkedList::deleteRec(int num, Node* start)
 void DoubleLinkedList::print()
 {
   Node* temp = m_front;
+  std::cout<<"\n";
   while(temp != nullptr)
   {
     std::cout<<temp->getData()<<" ";
@@ -117,7 +126,7 @@ void DoubleLinkedList::reverse()
 
 void DoubleLinkedList::reverseRec(Node* prev, Node* curr)
 {
-  if(curr)
+  if(curr != nullptr)
   {
     reverseRec(curr, curr->getNext());
     curr->setNext(prev);

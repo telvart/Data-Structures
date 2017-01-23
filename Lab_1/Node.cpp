@@ -1,3 +1,11 @@
+/**
+*	@file: Node.cpp
+*	@author: Tim Elvart
+*	@email: telvart@ku.edu
+*	@date: 2017.1.23
+*	@brief: implementation of methods declared in Node.h
+*/
+
 #include "Node.h"
 
 Node::Node(int value)

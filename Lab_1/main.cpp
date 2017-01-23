@@ -1,8 +1,17 @@
+/**
+*	@file: main.cpp
+*	@author: Tim Elvart
+*	@email: telvart@ku.edu
+*	@date: 2017.1.23
+*	@brief: A program to interact with a DoubleLinkedList that was implemented recursively
+*/
+
 #include <iostream>
 #include <fstream>
 #include <string>
 #include "DoubleLinkedList.h"
 
+/* @return a DLL structure populated with values from the input filename */
 DoubleLinkedList* createDLLfromFile(std::string fileName)
 {
   std::ifstream fileIn(fileName);
@@ -38,7 +47,7 @@ int main()
   std::cout<<"\ndata.txt elements: ";
   DLL->print();
   std::cout<<"---------------------------------------------\n";
-  
+
   do
   {
     printMenu();
