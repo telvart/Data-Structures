@@ -4,6 +4,7 @@ Node::Node(int value)
 {
   m_dataContained = value;
   m_next=nullptr;
+  m_prev=nullptr;
 }
 
 void Node::setNext(Node* next)

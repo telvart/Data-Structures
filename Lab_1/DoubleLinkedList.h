@@ -12,7 +12,7 @@ public:
   DoubleLinkedList();
   ~DoubleLinkedList();
   void insert(int num);
-  void erase(int num);
+  void deletenode(int num);
   void print();
   void reverse();
   bool isEmpty();
@@ -20,6 +20,7 @@ public:
 private:
 
   void insertRec(int num, Node* start);
+  void deleteRec(int num, Node* start);
 
 
   int m_size;

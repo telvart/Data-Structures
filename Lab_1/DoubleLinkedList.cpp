@@ -28,13 +28,14 @@ void DoubleLinkedList::insert(int num)
   }
   insertRec(num, m_front);
 }
-//TODO FIX INSERTION WEIRD ERROR
+
 void DoubleLinkedList::insertRec(int num, Node* start)
 {
   if(start->getNext() == nullptr)
   {
     Node* temp = new Node(num);
     start->setNext(temp);
+    temp->setPrev(start);
     m_rear = temp;
     m_size++;
     return;
@@ -42,17 +43,48 @@ void DoubleLinkedList::insertRec(int num, Node* start)
   insertRec(num,start->getNext());
 }
 
-void DoubleLinkedList::erase(int num)
+void DoubleLinkedList::deletenode(int num)
 {
+  if(m_size == 1 && m_front->getData() == num)
+  {
+    delete m_front;
+    m_size--;
+    m_front=nullptr;
+    m_rear=nullptr;
+    return;
+  }
+  deleteRec(num, m_front);
+}
+
+void DoubleLinkedList::deleteRec(int num, Node* start)
+{
+  if(start==nullptr)
+  {
+    std::cout<<"That value was not in the list";
+    return;
+  }
+  if(start->getData() == num)
+  {
+    //TODO check edge cases and change pointer manipulation
+    //start->getPrev()->setNext(start->getNext());
+    //start->getNext()->setPrev(start->getPrev());
+    m_size--;
+    return;
+  }
+  deleteRec(num, start->getNext());
 
 }
+
 void DoubleLinkedList::print()
 {
   Node* temp = m_front;
   while(temp != nullptr)
   {
     std::cout<<temp->getData()<<" ";
+    temp = temp->getNext();
   }
+  std::cout<<"\n";
+  return;
 }
 void DoubleLinkedList::reverse()
 {
