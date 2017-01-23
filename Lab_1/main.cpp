@@ -11,7 +11,7 @@
 #include <string>
 #include "DoubleLinkedList.h"
 
-/* @return a DLL structure populated with values from the input filename */
+/* @return a DLL structure populated with values from a .txt file named fileName */
 DoubleLinkedList* createDLLfromFile(std::string fileName)
 {
   std::ifstream fileIn(fileName);

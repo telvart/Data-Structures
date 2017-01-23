@@ -24,18 +24,22 @@ void Node::setPrev(Node* prev)
 {
   m_prev = prev;
 }
+
 void Node::setValue(int val)
 {
   m_dataContained = val;
 }
+
 int Node::getData()
 {
   return m_dataContained;
 }
+
 Node* Node::getNext()
 {
   return m_next;
 }
+
 Node* Node::getPrev()
 {
   return m_prev;

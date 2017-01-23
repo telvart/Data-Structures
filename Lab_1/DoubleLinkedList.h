@@ -17,48 +17,40 @@ class DoubleLinkedList
 
 public:
 
-  /*Constructor*/
+  /* Constructor */
   DoubleLinkedList();
 
-  /*Destructor*/
+  /* Destructor */
   ~DoubleLinkedList();
 
   /* @pre: DLL exists
-     @post: num will be inserted at the end of the list, if the list does not already contain num
-  */
+     @post: num will be inserted at the end of the list, if the list does not already contain num */
   void insert(int num);
 
   /* @pre: DLL exists
-     @post: num will be removed from the list if it exists within it
-  */
+     @post: num will be removed from the list if it exists within it */
   void deletenode(int num);
 
   /* @pre: DLL exists
-     @post: Each value in the list will be printed to the command line followed by a space
-  */
+     @post: Each value in the list will be printed to the command line followed by a space */
   void print();
 
   /*@pre: DLL exists
-    @post: The DLL will be reversed in order
-  */
+    @post: The DLL will be reversed in order */
   void reverse();
 
-  /* @return true if the list is empty, false otherwise
-  */
+  /* @return true if the list is empty, false otherwise */
   bool isEmpty();
 
 private:
 
-  /* @post: this function is called to recursively insert to the DLL
-  */
+  /* @post: this function is called to recursively insert to the DLL */
   void insertRec(int num, Node* start);
 
-  /* @post: this function is called to recursively delete from the DLL
-  */
+  /* @post: this function is called to recursively delete from the DLL */
   void deleteRec(int num, Node* start);
 
-  /* @post: this function is called to recursively reverse the DLL's order
-  */
+  /* @post: this function is called to recursively reverse the DLL's order */
   void reverseRec(Node* prev, Node* curr);
 
   //member variables

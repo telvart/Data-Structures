@@ -125,8 +125,6 @@ void DoubleLinkedList::reverse()
   reverseRec(nullptr,m_front);
 }
 
-
-//TODO FIX POINTER MANIPULATION WITH PREV AND HEAD AND TAIL
 void DoubleLinkedList::reverseRec(Node* prev, Node* curr)
 {
   if(curr != nullptr)
@@ -134,11 +132,10 @@ void DoubleLinkedList::reverseRec(Node* prev, Node* curr)
     reverseRec(curr, curr->getNext());
     curr->setPrev(curr->getNext());
     curr->setNext(prev);
-
-
   }
   else
   {
+    m_rear = m_front;
     m_front = prev;
   }
 }
