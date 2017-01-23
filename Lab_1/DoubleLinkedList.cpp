@@ -31,7 +31,26 @@ void DoubleLinkedList::insert(int num)
 
 void DoubleLinkedList::insertRec(int num, Node* start)
 {
-  if(start->getNext() == nullptr)
+  if(start->getData() == num)
+  {
+    if(start == m_rear)
+    {
+      Node* temp = new Node(num);
+      start->setNext(temp);
+      temp->setPrev(start);
+      m_rear = temp;
+      m_size++;
+      return;
+    }
+    Node* temp = new Node(num);
+    temp->setNext(start->getNext());
+    temp->setPrev(start);
+    start->setNext(temp);
+    temp->getNext()->setPrev(temp);
+    m_size++;
+    return;
+  }
+  if(start == m_rear)
   {
     Node* temp = new Node(num);
     start->setNext(temp);
@@ -65,9 +84,6 @@ void DoubleLinkedList::deleteRec(int num, Node* start)
   }
   if(start->getData() == num)
   {
-    //TODO check edge cases and change pointer manipulation
-    //start->getPrev()->setNext(start->getNext());
-    //start->getNext()->setPrev(start->getPrev());
     if(start == m_front)
     {
       Node* temp = m_front;

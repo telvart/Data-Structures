@@ -8,17 +8,17 @@ DoubleLinkedList* createDLLfromFile(std::string fileName)
   std::ifstream fileIn(fileName);
   int numData = 11; //number of integers in data.txt
   DoubleLinkedList* DLL = new DoubleLinkedList();
+
   for(int i=0; i<numData; i++)
   {
     int value;
     fileIn>>value;
     DLL->insert(value);
-
   }
+
   fileIn.close();
   return DLL;
 }
-
 
 void printMenu()
 {
@@ -35,9 +35,10 @@ int main()
   int choice;
   int value;
   DoubleLinkedList* DLL = createDLLfromFile("data.txt");
-  std::cout<<"\nData.txt elements: ";
+  std::cout<<"\ndata.txt elements: ";
   DLL->print();
   std::cout<<"---------------------------------------------\n";
+  
   do
   {
     printMenu();
@@ -48,17 +49,26 @@ int main()
       std::cin>>value;
       DLL->insert(value);
     }
+
     else if(choice == 2)
     {
       std::cout<<"Enter a value to remove:\n";
       std::cin>>value;
       DLL->deletenode(value);
     }
+
+    else if(choice == 3)
+    {
+      DLL->reverse();
+    }
+
     else if (choice == 4)
     {
       DLL->print();
     }
+
   }while(choice != 5);
+
   delete DLL;
   return 0;
 }
