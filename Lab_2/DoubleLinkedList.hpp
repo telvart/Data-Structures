@@ -181,7 +181,7 @@ bool DoubleLinkedList<T>::search(T value)
   Node<T>* temp = m_front;
   while(temp != nullptr)
   {
-    if(temp->getData == value)
+    if(temp->getData() == value)
     {
       return true;
     }
@@ -189,3 +189,31 @@ bool DoubleLinkedList<T>::search(T value)
   }
   return false;
 }
+
+template <typename T>
+void DoubleLinkedList<T>::insertFront(T value)
+{
+  Node<T>* temp = new Node<T>(value);
+  if(isEmpty())
+  {
+    m_front =temp;
+    m_rear = temp;
+  }
+  else
+  {
+    temp->setNext(m_front);
+    m_front->setPrev(temp);
+    m_front = temp;
+  }
+  m_size++;
+  return;
+}
+
+
+
+
+
+
+
+
+//

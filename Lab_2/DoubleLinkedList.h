@@ -51,6 +51,9 @@ public:
   T pop();
 
   bool search(T value);
+
+  void insertFront(T value);
+
 private:
 
   /* @post: this function is called to recursively insert to the DLL */
