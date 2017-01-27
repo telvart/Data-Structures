@@ -12,12 +12,12 @@
 #include "DoubleLinkedList.h"
 
 /* @return a DLL structure populated with values from a .txt file named fileName */
-DoubleLinkedList* createDLLfromFile(std::string fileName)
+DoubleLinkedList<int>* createDLLfromFile(std::string fileName)
 {
   std::ifstream fileIn(fileName);
   int numData = 11; //number of integers in data.txt
   int value;
-  DoubleLinkedList* DLL = new DoubleLinkedList();
+  DoubleLinkedList<int>* DLL = new DoubleLinkedList<int>();
 
   for(int i=0; i<numData; i++)
   {
@@ -43,7 +43,7 @@ int main()
 {
   int choice;
   int value;
-  DoubleLinkedList* DLL = createDLLfromFile("data.txt");
+  DoubleLinkedList<int>* DLL = createDLLfromFile("data.txt");
   std::cout<<"\ndata.txt elements: ";
   DLL->print();
   std::cout<<"---------------------------------------------\n";

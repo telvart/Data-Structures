@@ -12,6 +12,7 @@
 #include "Node.h"
 #include <iostream>
 
+template <typename T>
 class DoubleLinkedList
 {
 
@@ -25,11 +26,11 @@ public:
 
   /* @pre: DLL exists
      @post: num will be inserted at the end of the list, if the list does not already contain num */
-  void insert(int num);
+  void insert(T num);
 
   /* @pre: DLL exists
      @post: num will be removed from the list if it exists within it */
-  void deletenode(int num);
+  void deletenode(T num);
 
   /* @pre: DLL exists
      @post: Each value in the list will be printed to the command line followed by a space */
@@ -42,21 +43,29 @@ public:
   /* @return true if the list is empty, false otherwise */
   bool isEmpty();
 
+  /* @return the value at the front of the list, if list is empty, default constructor for T returned */
+  T peek();
+
+  /* @post the front node in the list will be removed
+     @return the value at the front of the list, if list is empty, default constructor for T returned */
+  T pop();
+
 private:
 
   /* @post: this function is called to recursively insert to the DLL */
-  void insertRec(int num, Node* start);
+  void insertRec(T num, Node<T>* start);
 
   /* @post: this function is called to recursively delete from the DLL */
-  void deleteRec(int num, Node* start);
+  void deleteRec(T num, Node<T>* start);
 
   /* @post: this function is called to recursively reverse the DLL's order */
-  void reverseRec(Node* prev, Node* curr);
+  void reverseRec(Node<T>* prev, Node<T>* curr);
 
   //member variables
   int m_size;
-  Node* m_front;
-  Node* m_rear;
+  Node<T>* m_front;
+  Node<T>* m_rear;
 };
 
+#include "DoubleLinkedList.hpp"
 #endif
