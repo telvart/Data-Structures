@@ -1,6 +1,7 @@
 
 #include <iostream>
 #include "OpenHashTable.h"
+#include <unistd.h>
 
 
 void printMenu()
@@ -15,8 +16,22 @@ void printMenu()
 
 int main()
 {
-  std::cout<<"Hello world!\n";
-  int choice;
+  std::cout<<"Hello world!\r"<<std::flush;
+  usleep(1000000);
+  std::cout<<"How are you doing today?\r"<<std::flush;
+  usleep(1000000);
+  std::cout<<"Pretty good thank you for asking\r"<<std::flush;
+  usleep(1000000);
+  std::cout<<"Have a good day!\r\n"<<std::flush;
+
+  for(int i=0; i<1000000; i++)
+  {
+    std::cout<<i<<"/1000000\r"<<std::flush;
+  }
+
+
+  std::cout<<"Exiting...\n";
+/*  int choice;
   int value;
 
   OpenHashTable* hashTable = new OpenHashTable(29);
@@ -59,5 +74,6 @@ int main()
 
   }while(choice != 5);
 
-  delete hashTable;
+  delete hashTable;*/
+  return 0;
 }
