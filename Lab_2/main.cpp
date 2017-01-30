@@ -1,40 +1,42 @@
 
 #include <iostream>
+#include <fstream>
+#include <string>
 #include "OpenHashTable.h"
-#include <unistd.h>
 
+
+OpenHashTable* createHashFromFile(std::string fileName)
+{
+  std::ifstream fileIn(fileName);
+  int size;
+  int value;
+  fileIn>>size;
+  OpenHashTable* t = new OpenHashTable(size);
+  while(fileIn >> value)
+  {
+    t->insert(value);
+  }
+  fileIn.close();
+  return t;
+
+}
 
 void printMenu()
 {
   std::cout<<"Please choose one of the following commands:\n"
-           <<"1) Insert to hash table\n"
-           <<"2) Delete from hash table\n"
-           <<"3) Find in hash table\n"
-           <<"4) Print the table\n"
-           <<"5) Exit\n";
+           <<"1) Insert \n"
+           <<"2) Delete \n"
+           <<"3) Print the table\n"
+           <<"4) Exit\n";
 }
 
 int main()
 {
-  std::cout<<"Hello world!\r"<<std::flush;
-  usleep(1000000);
-  std::cout<<"How are you doing today?\r"<<std::flush;
-  usleep(1000000);
-  std::cout<<"Pretty good thank you for asking\r"<<std::flush;
-  usleep(1000000);
-  std::cout<<"Have a good day!\r\n"<<std::flush;
 
-  for(int i=0; i<1000000; i++)
-  {
-    std::cout<<i<<"/1000000\r"<<std::flush;
-  }
-
-
-  std::cout<<"Exiting...\n";
-/*  int choice;
+  int choice;
   int value;
 
-  OpenHashTable* hashTable = new OpenHashTable(29);
+  OpenHashTable* hashTable = createHashFromFile("data.txt");
 
   do
   {
@@ -53,27 +55,14 @@ int main()
       std::cin>>value;
       hashTable->deleteVal(value);
     }
-    else if(choice == 3)
-    {
-      std::cout<<"Enter a value to search for:\n";
-      std::cin>>value;
-      if (hashTable->find(value))
-      {
-        std::cout<<value<<" was in the table!\n";
 
-      }
-      else
-      {
-        std::cout<<value<<" was not in the table!\n";
-      }
-    }
-    else if(choice == 4)
+    else if(choice == 3)
     {
       hashTable->printTable();
     }
 
-  }while(choice != 5);
+  }while(choice != 4);
 
-  delete hashTable;*/
+  delete hashTable;
   return 0;
 }

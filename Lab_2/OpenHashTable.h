@@ -23,7 +23,6 @@ public:
 
 private:
   int hashFunction(int key);
-  void rehash();
 
   DoubleLinkedList<int>** m_table;
   int m_buckets;

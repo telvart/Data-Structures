@@ -50,11 +50,6 @@ int OpenHashTable::hashFunction(int key)
   return key % m_buckets;
 }
 
-void OpenHashTable::rehash()
-{
-
-}
-
 int OpenHashTable::getNumBuckets()
 {
   return m_buckets;
@@ -74,6 +69,7 @@ void OpenHashTable::printTable()
   {
     std::cout<<i<<": ";
     m_table[i]->print();
+    std::cout<<"\n";
   }
   std::cout<<"\n";
 }

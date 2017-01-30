@@ -115,13 +115,11 @@ template <typename T>
 void DoubleLinkedList<T>::print()
 {
   Node<T>* temp = m_front;
-  std::cout<<"\n";
   while(temp != nullptr)
   {
     std::cout<<temp->getData()<<" ";
     temp = temp->getNext();
   }
-  std::cout<<"\n";
   return;
 }
 
