@@ -33,8 +33,10 @@ void ClosedHashTable::deletenode(int key)
 
 }
 
-void ClosedHashTable::search(int key)
+bool ClosedHashTable::search(int key)
 {
+
+  return searchResolution(key, hash(key), 0);
 
 }
 
@@ -59,7 +61,7 @@ int ClosedHashTable::collisionResolution(int initialHash, int i)
     return -1;
   }
 
-  int newIndex = initialHash + (i * i);
+  int newIndex = (initialHash + (i * i)) % m_buckets;
   if(m_table[newIndex].isEmpty())
   {
     return newIndex;
@@ -68,10 +70,62 @@ int ClosedHashTable::collisionResolution(int initialHash, int i)
 
 }
 
-int ClosedHashTable::resolutionFunction()
+bool ClosedHashTable::searchResolution(int key, int initialHash, int i)
 {
-  return 0;
+  if(i >= m_buckets)
+  {
+    return false;
+  }
+  int newIndex = (initialHash + (i * i)) % m_buckets;
+  bool empty = m_table[newIndex].isEmpty();
+  int val = m_table[newIndex].value();
+  bool beenDeleted = m_table[newIndex].beenDeleted();
+
+  if(empty)
+  {
+    if(beenDeleted)
+    {
+      return false;
+    }
+    else
+    {
+      return searchResolution(key,initialHash,i+1);
+    }
+  }
+  else
+  {
+    if(val == key)
+    {
+      return true;
+    }
+    else
+    {
+      return searchResolution(key,initialHash,i+1);
+    }
+  }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

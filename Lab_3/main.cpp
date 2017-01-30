@@ -31,7 +31,9 @@ int main()
     }
     else if(choice == 2)
     {
-
+      std::cout<<"Enter a value to remove:\n";
+      std::cin>>value;
+      std::cout<<hashTable.search(value);
     }
     else if(choice == 3)
     {

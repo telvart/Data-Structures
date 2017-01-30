@@ -13,14 +13,14 @@ class ClosedHashTable
 
     void insert(int key);
     void deletenode(int key);
-    void search(int key);
+    bool search(int key);
     void print();
 
   private:
 
     int hash(int key);
     int collisionResolution(int initialHash, int i);
-    int resolutionFunction();
+    bool searchResolution(int key, int initialHash, int i);
 
     int m_buckets;
     int m_entries;

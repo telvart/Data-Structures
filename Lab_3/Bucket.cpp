@@ -21,6 +21,7 @@ void Bucket::setValue(int val)
 void Bucket::removeVal()
 {
   m_hasValue = false;
+  m_beenDeleted = true;
 
 }
 
