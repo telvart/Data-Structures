@@ -4,7 +4,6 @@
 #include <string>
 #include "OpenHashTable.h"
 
-
 OpenHashTable* createHashFromFile(std::string fileName)
 {
   std::ifstream fileIn(fileName);
@@ -23,11 +22,12 @@ OpenHashTable* createHashFromFile(std::string fileName)
 
 void printMenu()
 {
-  std::cout<<"Please choose one of the following commands:\n"
-           <<"1) Insert \n"
-           <<"2) Delete \n"
-           <<"3) Print the table\n"
-           <<"4) Exit\n";
+  std::cout<<"********************************************\n"
+           <<"Please choose one of the following commands:\n"
+           <<"1) insert \n"
+           <<"2) delete \n"
+           <<"3) print the table\n"
+           <<"4) exit\n";
 }
 
 int main()

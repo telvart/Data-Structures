@@ -17,7 +17,7 @@ OpenHashTable::~OpenHashTable()
   {
     delete m_table[i];
   }
-  delete m_table;
+  delete[] m_table;
 }
 
 void OpenHashTable::insert(int key)
@@ -65,6 +65,7 @@ int OpenHashTable::getLoadFactor()
 
 void OpenHashTable::printTable()
 {
+  std::cout<<"\n";
   for(int i=0; i<m_buckets; i++)
   {
     std::cout<<i<<": ";
