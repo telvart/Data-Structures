@@ -21,6 +21,8 @@ class ClosedHashTable
     int hash(int key);
     int collisionResolution(int initialHash, int i);
     bool searchResolution(int key, int initialHash, int i);
+    void deletenode(int key, int initialHash, int i);
+    void rehash();
 
     int m_buckets;
     int m_entries;

@@ -33,7 +33,7 @@ int main()
     {
       std::cout<<"Enter a value to remove:\n";
       std::cin>>value;
-      std::cout<<hashTable.search(value);
+      hashTable.deletenode(value);
     }
     else if(choice == 3)
     {
