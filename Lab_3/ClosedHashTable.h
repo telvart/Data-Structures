@@ -15,14 +15,17 @@ class ClosedHashTable
     void deletenode(int key);
     bool search(int key);
     void print();
+    double loadfactor();
 
   private:
 
     int hash(int key);
     int collisionResolution(int initialHash, int i);
-    bool searchResolution(int key, int initialHash, int i);
+    bool search(int key, int initialHash, int i);
     void deletenode(int key, int initialHash, int i);
     void rehash();
+    void resize();
+    bool isPrime(int key);
 
     int m_buckets;
     int m_entries;

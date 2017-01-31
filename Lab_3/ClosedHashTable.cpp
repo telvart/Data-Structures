@@ -20,6 +20,11 @@ void ClosedHashTable::insert(int key)
   if(index >= 0)
   {
     m_table[index].setValue(key);
+    m_entries++;
+  }
+  if(loadfactor() >= 0.5)
+  {
+    rehash();
   }
 }
 
@@ -31,7 +36,7 @@ void ClosedHashTable::deletenode(int key)
 bool ClosedHashTable::search(int key)
 {
 
-  return searchResolution(key, hash(key), 0);
+  return search(key, hash(key), 0);
 
 }
 
@@ -59,7 +64,7 @@ int ClosedHashTable::hash(int key)
 
 int ClosedHashTable::collisionResolution(int initialHash, int i)
 {
-  if(i > m_buckets)
+  if(i >= m_buckets)
   {
     return -1;
   }
@@ -73,7 +78,7 @@ int ClosedHashTable::collisionResolution(int initialHash, int i)
 
 }
 
-bool ClosedHashTable::searchResolution(int key, int initialHash, int i)
+bool ClosedHashTable::search(int key, int initialHash, int i)
 {
   if(i >= m_buckets)
   {
@@ -92,7 +97,7 @@ bool ClosedHashTable::searchResolution(int key, int initialHash, int i)
     }
     else
     {
-      return searchResolution(key,initialHash,i+1);
+      return search(key,initialHash,i+1);
     }
   }
   else
@@ -103,7 +108,7 @@ bool ClosedHashTable::searchResolution(int key, int initialHash, int i)
     }
     else
     {
-      return searchResolution(key,initialHash,i+1);
+      return search(key,initialHash,i+1);
     }
   }
 }
@@ -135,6 +140,7 @@ void ClosedHashTable::deletenode(int key, int initialHash, int i)
     if(val == key)
     {
       m_table[newIndex].removeVal();
+      m_entries--;
     }
     else
     {
@@ -146,10 +152,41 @@ void ClosedHashTable::deletenode(int key, int initialHash, int i)
 
 void ClosedHashTable::rehash()
 {
-  
+  std::cout<<"rehashing...\n";
+
 }
 
+double ClosedHashTable::loadfactor()
+{
+  return (double)m_entries/(double)m_buckets;
+}
 
+void ClosedHashTable::resize()
+{
+  int newSize = m_buckets*2;
+  if(newSize%2 == 0)
+  {
+    newSize+=1;
+  }
+  while(!isPrime(newSize))
+  {
+    newSize+=2;
+  }
+  m_buckets=newSize;
+
+}
+
+bool ClosedHashTable::isPrime(int key)
+{
+  for(int i=2; i<= key/2; i++)
+  {
+    if(key % i == 0)
+    {
+      return false;
+    }
+  }
+  return true;
+}
 
 
 
