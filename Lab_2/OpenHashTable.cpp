@@ -1,3 +1,10 @@
+/**
+*	@file: OpenHashTable.cpp
+*	@author: Tim Elvart
+*	@email: telvart@ku.edu
+*	@date: 2017.1.31
+*	@brief: implementation of methods declared in OpenHashTable.h
+*/
 #include "OpenHashTable.h"
 
 OpenHashTable::OpenHashTable(int m)
