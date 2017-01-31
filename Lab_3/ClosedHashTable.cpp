@@ -152,7 +152,22 @@ void ClosedHashTable::deletenode(int key, int initialHash, int i)
 
 void ClosedHashTable::rehash()
 {
-  std::cout<<"rehashing...\n";
+  std::cout<<"rehashing...\r"<<std::flush;
+  int oldsize = m_buckets;
+  resize();
+  Bucket* temp = m_table;
+  m_entries = 0;
+  m_table = new Bucket[m_buckets];
+  for(int i=0; i<oldsize; i++)
+  {
+    if(!temp[i].isEmpty())
+    {
+      insert(temp[i].value());
+    }
+  }
+  delete[] temp;
+  std::cout<<"            \n";
+
 
 }
 

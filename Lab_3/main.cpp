@@ -1,5 +1,6 @@
 
 #include <iostream>
+#include <fstream>
 #include "ClosedHashTable.h"
 
 
@@ -13,9 +14,36 @@ void printMenu()
            <<"4) exit\n";
 }
 
+/*void test1()
+{
+  std::ofstream fileOut("data.txt");
+  for(int i=0; i<1000000; i++)
+  {
+    fileOut<<i<<"\n";
+  }
+  fileOut.close();
+}
+
+
+
+ClosedHashTable test2()
+{
+  ClosedHashTable h = ClosedHashTable(17);
+  int value;
+  std::ifstream fileIn("data.txt");
+  for(int i=0; i<1000000; i++)
+  {
+    fileIn>>value;
+    h.insert(value);
+  }
+  fileIn.close();
+  return h;
+}*/
+
 
 int main()
 {
+  //test1();
   int choice;
   int value;
   ClosedHashTable hashTable = ClosedHashTable(7);
