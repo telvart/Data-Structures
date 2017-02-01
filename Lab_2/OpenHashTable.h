@@ -50,7 +50,7 @@ private:
   int hashFunction(int key);
 
   //member variables
-  DoubleLinkedList<int>** m_table;
+  DoubleLinkedList<int>* m_table;
   int m_buckets;
   int m_entries;
   int m_loadFactor;
