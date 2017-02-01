@@ -1,8 +1,14 @@
+/**
+*	@file: main.cpp
+*	@author: Tim Elvart
+*	@email: telvart@ku.edu
+*	@date: 2017.2.1
+*	@brief: A program to interact with a ClosedHashTable for integers
+*/
 
 #include <iostream>
 #include <fstream>
 #include "ClosedHashTable.h"
-
 
 void printMenu()
 {
