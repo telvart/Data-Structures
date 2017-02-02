@@ -1,3 +1,10 @@
+/**
+*	@file: ClosedDoubleHashTable.cpp
+*	@author: Tim Elvart
+*	@email: telvart@ku.edu
+*	@date: 2017.2.1
+*	@brief: Implementation of methods declared in ClosedDoubleHashTable.h
+*/
 #include "ClosedDoubleHashTable.h"
 #include <iostream>
 
@@ -40,7 +47,7 @@ void ClosedDoubleHashTable::print()
     }
     else
     {
-      std::cout<<i<<": -1\n";
+      std::cout<<i<<": empty\n";
     }
   }
 }

@@ -59,7 +59,7 @@ void ClosedHashTable::print()
     }
     else
     {
-      std::cout<<i<<": 0\n";
+      std::cout<<i<<": empty\n";
     }
 
   }
