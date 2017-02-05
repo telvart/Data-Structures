@@ -27,6 +27,7 @@ void OpenHashTable::insert(int key)
   {
     m_table[index].insertFront(key);
     m_entries++;
+    m_loadFactor = m_entries/m_buckets;
   }
 }
 
@@ -36,6 +37,7 @@ void OpenHashTable::deleteVal(int key)
   if(m_table[index].search(key))
   {
     m_table[index].deletenode(key);
+    m_entries--;
   }
 }
 
