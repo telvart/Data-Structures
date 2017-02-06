@@ -11,28 +11,21 @@ OpenHashTable::OpenHashTable(int m)
 {
   m_buckets = m;
   m_entries = 0;
-  m_table = new DoubleLinkedList<int>*[m];
-  for(int i=0; i<m; i++)
-  {
-    m_table[i] = new DoubleLinkedList<int>;
-  }
+  m_table = new DoubleLinkedList<int>[m];
+
 }
 
 OpenHashTable::~OpenHashTable()
 {
-  for(int i=0; i<m_buckets; i++)
-  {
-    delete m_table[i];
-  }
   delete[] m_table;
 }
 
 void OpenHashTable::insert(int key)
 {
   int index = hashFunction(key);
-  if(!m_table[index]->search(key))
+  if(!m_table[index].search(key))
   {
-    m_table[index]->insertFront(key);
+    m_table[index].insertFront(key);
     m_entries++;
   }
 }
@@ -40,16 +33,16 @@ void OpenHashTable::insert(int key)
 void OpenHashTable::deleteVal(int key)
 {
   int index = hashFunction(key);
-  if(m_table[index]->search(key))
+  if(m_table[index].search(key))
   {
-    m_table[index]->deletenode(key);
+    m_table[index].deletenode(key);
   }
 }
 
 bool OpenHashTable::find(int key)
 {
   int index = hashFunction(key);
-  return m_table[index]->search(key);
+  return m_table[index].search(key);
 }
 
 int OpenHashTable::hashFunction(int key)
@@ -76,7 +69,7 @@ void OpenHashTable::printTable()
   for(int i=0; i<m_buckets; i++)
   {
     std::cout<<i<<": ";
-    m_table[i]->print();
+    m_table[i].print();
     std::cout<<"\n";
   }
   std::cout<<"\n";

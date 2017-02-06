@@ -1,3 +1,11 @@
+/**
+*	@file: ClosedHashTable.cpp
+*	@author: Tim Elvart
+*	@email: telvart@ku.edu
+*	@date: 2017.2.1
+*	@brief: Implementation of methods declared in ClosedHashTable.h
+*/
+
 #include "ClosedHashTable.h"
 
 
@@ -51,7 +59,7 @@ void ClosedHashTable::print()
     }
     else
     {
-      std::cout<<i<<": 0\n";
+      std::cout<<i<<": empty\n";
     }
 
   }

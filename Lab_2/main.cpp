@@ -10,16 +10,16 @@
 #include <string>
 #include "OpenHashTable.h"
 
-OpenHashTable* createHashFromFile(std::string fileName)
+OpenHashTable createHashFromFile(std::string fileName)
 {
   std::ifstream fileIn(fileName);
   int size;
   int value;
   fileIn>>size;
-  OpenHashTable* t = new OpenHashTable(size);
+  OpenHashTable t  = OpenHashTable(size);
   while(fileIn >> value)
   {
-    t->insert(value);
+    t.insert(value);
   }
   fileIn.close();
   return t;
@@ -42,7 +42,7 @@ int main()
   int choice;
   int value;
 
-  OpenHashTable* hashTable = createHashFromFile("data.txt");
+  OpenHashTable hashTable = createHashFromFile("data.txt");
 
   do
   {
@@ -53,22 +53,22 @@ int main()
     {
       std::cout<<"Enter a value to insert:\n";
       std::cin>>value;
-      hashTable->insert(value);
+      hashTable.insert(value);
     }
+
     else if(choice == 2)
     {
       std::cout<<"Enter a value to remove:\n";
       std::cin>>value;
-      hashTable->deleteVal(value);
+      hashTable.deleteVal(value);
     }
 
     else if(choice == 3)
     {
-      hashTable->printTable();
+      hashTable.printTable();
     }
 
   }while(choice != 4);
 
-  delete hashTable;
   return 0;
 }

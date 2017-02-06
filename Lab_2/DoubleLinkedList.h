@@ -50,8 +50,10 @@ public:
      @return the value at the front of the list, if list is empty, default constructor for T returned */
   T pop();
 
+  /* @return true if value is in the DLL, otherwise false */
   bool search(T value);
 
+  /* @post value will be inserted to the front of the DLL */
   void insertFront(T value);
 
 private:

@@ -1,3 +1,11 @@
+/**
+*	@file: Bucket.cpp
+*	@author: Tim Elvart
+*	@email: telvart@ku.edu
+*	@date: 2017.2.1
+*	@brief: Implementation of methods declared in Bucket.h
+*/
+
 #include "Bucket.h"
 
 Bucket::Bucket()
