@@ -54,7 +54,7 @@ class ClosedHashTable
     void deletenode(int key, int initialHash, int i);
 
     /* @post The size of the table will doubled, and rounded to the nearest prime number.
-             All values in the hash table will remain present */
+             Keys in the hash table will be re inserted into the table */
     void rehash();
 
     /* @post sets m_buckets to the new size to be used when rehashing */

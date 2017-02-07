@@ -99,7 +99,7 @@ bool ClosedHashTable::search(int key, int initialHash, int i)
 
   if(empty)
   {
-    if(beenDeleted)
+    if(!beenDeleted)
     {
       return false;
     }
