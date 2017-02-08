@@ -21,6 +21,7 @@ void printMenu()
            <<"4) exit\n";
 }
 
+
 ClosedHashTable createClosedHashTableFromFile(std::string fileName)
 {
   int choice;
@@ -58,6 +59,7 @@ ClosedHashTable createClosedHashTableFromFile(std::string fileName)
   fileIn.close();
   return t;
 }
+
 
 int main()
 {

@@ -121,6 +121,7 @@ bool ClosedHashTable::search(int key, int i)
 
   if(m_table[newIndex].isEmpty())
   {
+
     if(!m_table[newIndex].beenDeleted())
     {
       return false;

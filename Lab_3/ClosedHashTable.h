@@ -10,10 +10,7 @@
 #define CLOSEDHASHTABLE_H
 #include <iostream>
 #include "Bucket.h"
-enum HashScheme
-{
-	QUADRATICPROBE,DOUBLEHASH
-};
+
 class ClosedHashTable
 {
   public:
