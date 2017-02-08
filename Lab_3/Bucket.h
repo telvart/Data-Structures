@@ -11,6 +11,7 @@
 
 class Bucket
 {
+
 public:
 
   /* Constructor */
@@ -31,7 +32,6 @@ public:
 
   /* @return true if the bucket currently holds a value, otherwise false */
   bool isEmpty();
-
 
 private:
 

@@ -21,10 +21,10 @@ class ClosedHashTable
     /* Destructor */
     ~ClosedHashTable();
 
-    /* @post key will be inserted into the ClosedHashTable */
+    /* @post key will be inserted if it is not already in the table */
     void insert(int key);
 
-    /* @post key will be removed from the ClosedHashTable */
+    /* @post key will be removed from the table if it exists */
     void deletenode(int key);
 
     /* @return true if key is in the table, otherwise false */
@@ -41,7 +41,7 @@ class ClosedHashTable
              1: <entry> flag = <flag value>  ... */
     void print();
 
-    /* @return the current load factor(lambda) of the table: m_entries/m_buckets */
+    /* @return the current load factor(lambda) of the table: m_entries / m_buckets */
     double loadfactor();
 
   private:
@@ -52,11 +52,11 @@ class ClosedHashTable
     /** @return p - (key % p) */
     int hashPlus(int key, int p);
 
-    /* @return index to insert key into the table. determined by quadratic probing
-               resolution scheme with recursion  */
+    /* @return index to insert key into the table. determined by the recursive
+               resolution function being used */
     int collisionResolution(int key, int i);
 
-    /*@return true if key is in the table. Searches with quadratic probing */
+    /* @return true if key is in the table. */
     bool search(int key, int i);
 
     /* @post key will be removed from the table. Uses quadratic prpbing to search */
@@ -72,7 +72,10 @@ class ClosedHashTable
     /* @return true if key is a prime number, otherwise false */
     bool isPrime(int key);
 
+    /* @return (hash(key) + i^2) % m_buckets */
     int quadraticProbing(int key, int i);
+
+    /* @return (hash(key) + (i * hashPlus(key, p))) % m_buckets */
     int doubleHashing(int key, int i);
 
     // member variables

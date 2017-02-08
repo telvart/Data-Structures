@@ -21,7 +21,6 @@ void printMenu()
            <<"4) exit\n";
 }
 
-
 ClosedHashTable createClosedHashTableFromFile(std::string fileName)
 {
   int choice;
@@ -47,7 +46,7 @@ ClosedHashTable createClosedHashTableFromFile(std::string fileName)
       t.setDoubleHashing();
       break;
     case 3:
-      std::cout<<"\nExiting\n";
+      std::cout<<"\nExiting...\n";
       exit(1);
       break;
   }
@@ -56,12 +55,12 @@ ClosedHashTable createClosedHashTableFromFile(std::string fileName)
   {
     t.insert(value);
   }
+
   fileIn.close();
   return t;
 }
 
-
-int main()
+int main(int argc, char** argv)
 {
   int choice;
   int value;
@@ -72,6 +71,7 @@ int main()
   {
     printMenu();
     std::cin>>choice;
+
     if(choice == 1)
     {
       std::cout<<"Enter a value to insert:\n";
@@ -88,6 +88,13 @@ int main()
     {
       hashTable.print();
     }
-
+    else
+    {
+      if(choice != 4)
+      {
+        std::cout<<"Invalid input given, please try again\n";
+      }
+    }
   }while(choice != 4);
+  std::cout<<"Exiting...\n";
 }
