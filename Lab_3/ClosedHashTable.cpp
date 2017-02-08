@@ -8,11 +8,11 @@
 
 #include "ClosedHashTable.h"
 
-
 ClosedHashTable::ClosedHashTable(int m)
+  :resolutionFunction(&ClosedHashTable::quadraticProbing)
 {
-  m_buckets=m;
-  m_entries=0;
+  m_buckets = m;
+  m_entries = 0;
   m_table = new Bucket[m];
 }
 
@@ -23,35 +23,46 @@ ClosedHashTable::~ClosedHashTable()
 
 void ClosedHashTable::insert(int key)
 {
+  if(!search(key))
+  {
+    int index = collisionResolution(key,0);
+    if(index >= 0)
+    {
+      m_table[index].setValue(key);
+      m_entries++;
+    }
+  }
 
-  int index = collisionResolution(hash(key),0);
-  if(index >= 0)
-  {
-    m_table[index].setValue(key);
-    m_entries++;
-  }
-  if(loadfactor() >= 0.5)
-  {
-    rehash();
-  }
+  // if(loadfactor() >= 0.5)
+  // {
+  //   rehash();
+  // }
 }
 
 void ClosedHashTable::deletenode(int key)
 {
-  deletenode(key, hash(key), 0);
+  deletenode(key, 0);
 }
 
 bool ClosedHashTable::search(int key)
 {
+  return search(key, 0);
+}
 
-  return search(key, hash(key), 0);
+void ClosedHashTable::setQuadraticProbing()
+{
+  resolutionFunction = &ClosedHashTable::quadraticProbing;
+}
+void ClosedHashTable::setDoubleHashing()
+{
+  resolutionFunction = &ClosedHashTable::doubleHashing;
 
 }
 
 void ClosedHashTable::print()
 {
   std::cout<<"\n";
-  for(int i=0; i<m_buckets; i++)
+  for(int i = 0; i < m_buckets; i++)
   {
     if(!m_table[i].isEmpty())
     {
@@ -61,7 +72,6 @@ void ClosedHashTable::print()
     {
       std::cout<<i<<": empty\n";
     }
-
   }
 }
 
@@ -70,73 +80,82 @@ int ClosedHashTable::hash(int key)
   return key % m_buckets;
 }
 
-int ClosedHashTable::collisionResolution(int initialHash, int i)
+int ClosedHashTable::hashPlus(int key, int p)
+{
+    return p - (key % p);
+}
+
+int ClosedHashTable::collisionResolution(int key, int i)
 {
   if(i >= m_buckets)
   {
     return -1;
   }
 
-  int newIndex = (initialHash + (i * i)) % m_buckets;
+  int newIndex = (this->*resolutionFunction)(key, i);
   if(m_table[newIndex].isEmpty())
   {
     return newIndex;
   }
-  return collisionResolution(initialHash, i+1);
-
+  return collisionResolution(key, i+1);
 }
 
-bool ClosedHashTable::search(int key, int initialHash, int i)
+int ClosedHashTable::quadraticProbing(int key, int i)
+{
+  return (hash(key) + (i * i)) % m_buckets;
+}
+
+int ClosedHashTable::doubleHashing(int key, int i)
+{
+  return (hash(key) + (i * hashPlus(key, 5))) % m_buckets;
+}
+
+bool ClosedHashTable::search(int key, int i)
 {
   if(i >= m_buckets)
   {
     return false;
   }
-  int newIndex = (initialHash + (i * i)) % m_buckets;
-  bool empty = m_table[newIndex].isEmpty();
-  int val = m_table[newIndex].value();
-  bool beenDeleted = m_table[newIndex].beenDeleted();
 
-  if(empty)
+  int newIndex = (this->*resolutionFunction)(hash(key), i);
+
+  if(m_table[newIndex].isEmpty())
   {
-    if(beenDeleted)
+    if(!m_table[newIndex].beenDeleted())
     {
       return false;
     }
     else
     {
-      return search(key,initialHash,i+1);
+      return search(key, i+1);
     }
   }
   else
   {
-    if(val == key)
+    if(m_table[newIndex].value() == key)
     {
       return true;
     }
     else
     {
-      return search(key,initialHash,i+1);
+      return search(key, i+1);
     }
   }
 }
 
-void ClosedHashTable::deletenode(int key, int initialHash, int i)
+void ClosedHashTable::deletenode(int key, int i)
 {
-  if ( i>= m_buckets)
+  if ( i >= m_buckets)
   {
     return;
   }
-  int newIndex = (initialHash + (i * i)) % m_buckets;
-  bool empty = m_table[newIndex].isEmpty();
-  int val = m_table[newIndex].value();
-  bool beenDeleted = m_table[newIndex].beenDeleted();
+  int newIndex = (this->*resolutionFunction)(hash(key), i);
 
-  if(empty)
+  if(m_table[newIndex].isEmpty())
   {
-    if(beenDeleted)
+    if(m_table[newIndex].beenDeleted())
     {
-      deletenode(key,initialHash,i+1);
+      deletenode(key, i+1);
     }
     else
     {
@@ -145,14 +164,14 @@ void ClosedHashTable::deletenode(int key, int initialHash, int i)
   }
   else
   {
-    if(val == key)
+    if(m_table[newIndex].value() == key)
     {
       m_table[newIndex].removeVal();
       m_entries--;
     }
     else
     {
-       deletenode(key,initialHash,i+1);
+       deletenode(key, i+1);
     }
   }
 
@@ -166,7 +185,7 @@ void ClosedHashTable::rehash()
   Bucket* temp = m_table;
   m_entries = 0;
   m_table = new Bucket[m_buckets];
-  for(int i=0; i<oldsize; i++)
+  for(int i = 0; i < oldsize; i++)
   {
     if(!temp[i].isEmpty())
     {
@@ -181,27 +200,27 @@ void ClosedHashTable::rehash()
 
 double ClosedHashTable::loadfactor()
 {
-  return (double)m_entries/(double)m_buckets;
+  return (double)m_entries / (double)m_buckets;
 }
 
 void ClosedHashTable::resize()
 {
   int newSize = m_buckets*2;
-  if(newSize%2 == 0)
+  if(newSize % 2 == 0)
   {
-    newSize+=1;
+    newSize += 1;
   }
   while(!isPrime(newSize))
   {
-    newSize+=2;
+    newSize += 2;
   }
-  m_buckets=newSize;
+  m_buckets = newSize;
 
 }
 
 bool ClosedHashTable::isPrime(int key)
 {
-  for(int i=2; i<= key/2; i++)
+  for(int i = 2; i <= key / 2; i++)
   {
     if(key % i == 0)
     {

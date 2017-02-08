@@ -10,8 +10,6 @@
 #include <fstream>
 #include <string>
 #include "ClosedHashTable.h"
-#include "ClosedDoubleHashTable.h"
-
 
 void printMenu()
 {
@@ -20,19 +18,39 @@ void printMenu()
            <<"1) insert\n"
            <<"2) delete\n"
            <<"3) print\n"
-           <<"4) insert DHT\n"
-           <<"5) delete DHT\n"
-           <<"6) print DHT\n"
-           <<"7) exit\n";
+           <<"4) exit\n";
 }
 
 ClosedHashTable createClosedHashTableFromFile(std::string fileName)
 {
-  std::ifstream fileIn(fileName);
+  int choice;
   int size;
   int value;
+
+  std::cout<<"Please choose one of the following hash methods:\n"
+           <<"1) Quadratic Probing\n"
+           <<"2) Double Hashing\n"
+           <<"3) Exit\n";
+  std::cin>>choice;
+
+  std::ifstream fileIn(fileName);
   fileIn>>size;
   ClosedHashTable t = ClosedHashTable(size);
+
+  switch(choice)
+  {
+    case 1:
+      t.setQuadraticProbing();
+      break;
+    case 2:
+      t.setDoubleHashing();
+      break;
+    case 3:
+      std::cout<<"\nExiting\n";
+      exit(1);
+      break;
+  }
+
   while(fileIn>>value)
   {
     t.insert(value);
@@ -40,32 +58,14 @@ ClosedHashTable createClosedHashTableFromFile(std::string fileName)
   fileIn.close();
   return t;
 }
-
-ClosedDoubleHashTable createClosedDoubleHashTableFromFile(std::string fileName)
-{
-  std::ifstream fileIn(fileName);
-  int size;
-  int value;
-  fileIn>>size;
-  ClosedDoubleHashTable t = ClosedDoubleHashTable(size);
-  while(fileIn>>value)
-  {
-    t.insert(value);
-  }
-  fileIn.close();
-  return t;
-}
-
-
-
 
 int main()
 {
-  //test1();
   int choice;
   int value;
+
   ClosedHashTable hashTable = createClosedHashTableFromFile("data.txt");
-  ClosedDoubleHashTable doubleHashTable = createClosedDoubleHashTableFromFile("data.txt");
+
   do
   {
     printMenu();
@@ -86,21 +86,6 @@ int main()
     {
       hashTable.print();
     }
-    else if(choice == 4)
-    {
-      std::cout<<"Enter a value to insert:\n";
-      std::cin>>value;
-      doubleHashTable.insert(value);
-    }
-    else if(choice == 5)
-    {
-      std::cout<<"Enter a value to remove:\n";
-      std::cin>>value;
-      doubleHashTable.deletenode(value);
-    }
-    else if(choice == 6)
-    {
-      doubleHashTable.print();
-    }
-  }while(choice != 7);
+
+  }while(choice != 4);
 }
