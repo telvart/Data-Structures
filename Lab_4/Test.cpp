@@ -42,3 +42,16 @@ double Test::doubleHashingTest(double desiredLoadFactor, int tableSize)
   }
   return timer.stop();
 }
+
+double Test::averageOpenHashing(double desiredLoadFactor, int tableSize)
+{
+  return 2;
+}
+double Test::averageQuadraticProbing(double desiredLoadFactor, int tableSize)
+{
+  return 2;
+}
+double Test::averageDoubleHashing(double desiredLoadFactor, int tableSize)
+{
+  return 2;
+}

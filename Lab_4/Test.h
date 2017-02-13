@@ -11,7 +11,10 @@
 class Test
 {
 public:
-  
+
+  double averageOpenHashing(double desiredLoadFactor, int tableSize);
+  double averageQuadraticProbing(double desiredLoadFactor, int tableSize);
+  double averageDoubleHashing(double desiredLoadFactor, int tableSize);
 
   double openHashingTest(double desiredLoadFactor, int tableSize);
   double quadraticProbingTest(double desiredLoadFactor, int tableSize);
