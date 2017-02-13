@@ -43,15 +43,30 @@ double Test::doubleHashingTest(double desiredLoadFactor, int tableSize)
   return timer.stop();
 }
 
-double Test::averageOpenHashing(double desiredLoadFactor, int tableSize)
+double Test::averageOpenHashing(int iterations, double desiredLoadFactor, int tableSize)
 {
-  return 2;
+  double totaltime = 0;
+  for(int i=0; i<iterations; i++)
+  {
+    totaltime += openHashingTest(desiredLoadFactor, tableSize);
+  }
+  return totaltime / iterations;
 }
-double Test::averageQuadraticProbing(double desiredLoadFactor, int tableSize)
+double Test::averageQuadraticProbing(int iterations, double desiredLoadFactor, int tableSize)
 {
-  return 2;
+  double totaltime = 0;
+  for(int i=0; i<iterations; i++)
+  {
+    totaltime += quadraticProbingTest(desiredLoadFactor, tableSize);
+  }
+  return totaltime / iterations;
 }
-double Test::averageDoubleHashing(double desiredLoadFactor, int tableSize)
+double Test::averageDoubleHashing(int iterations, double desiredLoadFactor, int tableSize)
 {
-  return 2;
+  double totaltime = 0;
+  for(int i=0; i<iterations; i++)
+  {
+    totaltime += doubleHashingTest(desiredLoadFactor, tableSize);
+  }
+  return totaltime / iterations;
 }

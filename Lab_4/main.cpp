@@ -17,11 +17,11 @@ int main(int argc, char** argv)
 {
   Test tester;
   Timer timer;
-  timer.printTime(tester.openHashingTest(0.9, 600011));
+  timer.printTime(tester.averageOpenHashing(5, 0.5, 600011));
   std::cout<<"\n";
-  timer.printTime(tester.quadraticProbingTest(0.9, 600011));
+  timer.printTime(tester.averageQuadraticProbing(5, 0.5, 600011));
   std::cout<<"\n";
-  timer.printTime(tester.doubleHashingTest(0.9, 600011));
+  timer.printTime(tester.averageDoubleHashing(5, 0.5, 600011));
 
   //Timer timer;
   // OpenHashTable openTable = OpenHashTable(600011);

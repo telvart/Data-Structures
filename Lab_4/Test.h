@@ -11,10 +11,11 @@
 class Test
 {
 public:
+  void runTestSuite(int accuracy);
 
-  double averageOpenHashing(double desiredLoadFactor, int tableSize);
-  double averageQuadraticProbing(double desiredLoadFactor, int tableSize);
-  double averageDoubleHashing(double desiredLoadFactor, int tableSize);
+  double averageOpenHashing(int iterations, double desiredLoadFactor, int tableSize);
+  double averageQuadraticProbing(int iterations, double desiredLoadFactor, int tableSize);
+  double averageDoubleHashing(int iterations, double desiredLoadFactor, int tableSize);
 
   double openHashingTest(double desiredLoadFactor, int tableSize);
   double quadraticProbingTest(double desiredLoadFactor, int tableSize);
