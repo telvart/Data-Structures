@@ -10,8 +10,10 @@
 
 class Test
 {
+  
 public:
   void runTestSuite(int numAvgs, int tableSize);
+
 
   double averageOpenHashing(int iterations, double desiredLoadFactor, int tableSize);
   double averageQuadraticProbing(int iterations, double desiredLoadFactor, int tableSize);
