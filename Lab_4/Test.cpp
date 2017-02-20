@@ -46,15 +46,6 @@ double* Test::averageTest(int iterations, double desiredLoadFactor, int tableSiz
   }
   for(int i=0; i<iterations; i++)
   {
-    for(int j=0; j<3; j++)
-    {
-      results[i][j] = 0;
-    }
-  }
-
-  for(int i=0; i<iterations; i++)
-  {
-    results[i] = 0;
     results[i] = singleTest(desiredLoadFactor, tableSize);
   }
   for(int i=0; i<iterations; i++)
@@ -69,6 +60,11 @@ double* Test::averageTest(int iterations, double desiredLoadFactor, int tableSiz
   {
     finalResults[2] += results[i][2];
   }
+  for(int i=0; i<iterations; i++)
+  {
+    delete[] results[i];
+  }
+  delete[] results;
   finalResults[0] = finalResults[0] / iterations;
   finalResults[1] = finalResults[1] / iterations;
   finalResults[2] = finalResults[2] / iterations;
@@ -102,4 +98,9 @@ void Test::runTestSuite(int numAvgs, int tableSize)
   std::cout<<"\nTotal time elapsed: "<<duration
            <<"\nNumber of trials taken per average: "<<numAvgs
            <<"\nSize of table during tests: "<<tableSize<<"\n\n";
+  for(int i=0; i<9; i++)
+  {
+    delete[] results[i];
+  }
+  delete[] results;
 }
