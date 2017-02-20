@@ -21,9 +21,9 @@ class BinarySearchTree
     ~BinarySearchTree();
     void insert(T key);
     void removeVal(T key);
-    BSTNode<T>* search(T key);
     void deleteMin();
     void deleteMax();
+    BSTNode<T>* search(T key);
     void preOrder();
     void inOrder();
     void levelOrder();
@@ -34,6 +34,9 @@ class BinarySearchTree
     BSTNode<T>* search(T key, BSTNode<T>* subtree);
     void preOrder(BSTNode<T>* subtree);
     void inOrder(BSTNode<T>* subtree);
+    void deleteTree(BSTNode<T>* subtree);
+    void deleteMin(BSTNode<T>* subtree);
+    void deleteMax(BSTNode<T>* subtree);
 
     BSTNode<T>* m_root;
 };
