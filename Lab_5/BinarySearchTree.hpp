@@ -3,14 +3,16 @@ template <typename T>
 BinarySearchTree<T>::BinarySearchTree()
 {
   m_root = nullptr;
+  m_entries = 0;
 }
 
 template <typename T>
 BinarySearchTree<T>::BinarySearchTree(std::string fileName)
 {
   m_root = nullptr;
+  m_entries = 0;
   std::ifstream fileIn(fileName);
-  int value;
+  T value;
   std::cout<<"\ndata.txt elements: ";
   while(fileIn >> value)
   {
@@ -34,6 +36,7 @@ void BinarySearchTree<T>::insert(T key)
   {
     BSTNode<T>* temp = new BSTNode<T>(key);
     m_root = temp;
+    m_entries++;
     return;
   }
   insert(key,m_root);
@@ -73,7 +76,7 @@ void BinarySearchTree<T>::insert(T key, BSTNode<T>* subtree)
 template <typename T>
 BSTNode<T>* BinarySearchTree<T>::search(T key)
 {
-  if(m_root == nullptr){return nullptr;}
+  if(m_root == nullptr) {return nullptr;}
 
   return search(key, m_root);
 }
@@ -122,7 +125,7 @@ void BinarySearchTree<T>::deleteMin()
 template <typename T>
 void BinarySearchTree<T>::deleteMin(BSTNode<T>* subtree)
 {
-  if(subtree ->getLeft() != nullptr)
+  if(subtree->getLeft() != nullptr)
   {
     if(subtree->getLeft()->getLeft() != nullptr)
     {
@@ -130,10 +133,24 @@ void BinarySearchTree<T>::deleteMin(BSTNode<T>* subtree)
     }
     else
     {
-      //TODO: reassign the right child if needed
-      delete subtree->getLeft();
-      subtree->setLeft(nullptr);
+      if(subtree->getLeft()->getRight() != nullptr)
+      {
+        BSTNode<T>* temp = subtree->getLeft();
+        subtree->setLeft(subtree->getLeft()->getRight());
+        delete temp;
+      }
+      else
+      {
+        delete subtree->getLeft();
+        subtree->setLeft(nullptr);
+      }
     }
+  }
+  else
+  {
+    BSTNode<T>* temp = subtree;
+    m_root = subtree->getRight();
+    delete temp;
   }
 }
 
@@ -146,6 +163,8 @@ void BinarySearchTree<T>::deleteMax()
 template <typename T>
 void BinarySearchTree<T>::deleteMax(BSTNode<T>* subtree)
 {
+
+  //TODO: FIX THIS FUNCTION
   if(subtree->getRight() != nullptr)
   {
     if(subtree->getRight()->getRight() != nullptr)
@@ -154,15 +173,24 @@ void BinarySearchTree<T>::deleteMax(BSTNode<T>* subtree)
     }
     else
     {
-      //TODO: reassign the left child if needed
-      delete subtree->getRight();
-      subtree->setRight(nullptr);
+      if(subtree->getRight()->getLeft() != nullptr)
+      {
+        BSTNode<T>* temp = subtree;
+        subtree->setRight(subtree->getRight()->getLeft());
+        delete temp;
+      }
+      else
+      {
+        delete subtree->getRight();
+        subtree->setRight(nullptr);
+      }
     }
   }
   else
   {
+    BSTNode<T>* temp = subtree;
     m_root = subtree->getLeft();
-    delete subtree;
+    delete temp;
   }
 
 }
@@ -187,7 +215,7 @@ void BinarySearchTree<T>::preOrder()
 template <typename T>
 void BinarySearchTree<T>::preOrder(BSTNode<T>* subtree)
 {
-  if(subtree == nullptr){return;}
+  if(subtree == nullptr) {return;}
 
   std::cout<<subtree->getValue()<<" ";
   preOrder(subtree->getLeft());
@@ -203,7 +231,7 @@ void BinarySearchTree<T>::inOrder()
 template <typename T>
 void BinarySearchTree<T>::inOrder(BSTNode<T>* subtree)
 {
-  if(subtree == nullptr){return;}
+  if(subtree == nullptr) {return;}
 
   inOrder(subtree->getLeft());
   std::cout<<subtree->getValue()<<" ";
@@ -213,7 +241,25 @@ void BinarySearchTree<T>::inOrder(BSTNode<T>* subtree)
 template <typename T>
 void BinarySearchTree<T>::levelOrder()
 {
-  Queue<T> queue = Queue<T>();
+  Queue<BSTNode<T>*> queue = Queue<BSTNode<T>*>();
+  if(m_root == nullptr) {return;}
+
+  queue.enqueue(m_root);
+  while(!queue.isEmpty())
+  {
+    BSTNode<T>* currentNode = queue.dequeue();
+    std::cout<<currentNode->getValue()<<" ";
+
+    if(currentNode->getLeft() != nullptr)
+    {
+      queue.enqueue(currentNode->getLeft());
+    }
+    if(currentNode->getRight() != nullptr)
+    {
+      queue.enqueue(currentNode->getRight());
+    }
+  }
+  std::cout<<std::endl;
 }
 
 

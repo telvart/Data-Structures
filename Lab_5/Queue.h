@@ -4,16 +4,16 @@
 
 #include "Node.h"
 
-template<typename T>
+template <typename T>
 class Queue
 {
   public:
     Queue();
     ~Queue();
     void enqueue(T val);
-    Node<T>* dequeue(T val);
+    T dequeue();
     bool isEmpty();
-    void size();
+    int size();
   private:
 
     int m_size;

@@ -31,7 +31,7 @@ public:
   void setValue(T val);
 
   /* @return: the current value of this->m_dataContained */
-  int getData();
+  T getData();
 
   /* @return: the current address this->m_next is pointing at */
   Node<T>* getNext();

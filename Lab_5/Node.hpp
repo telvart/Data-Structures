@@ -33,7 +33,7 @@ void Node<T>::setValue(T val)
 }
 
 template <typename T>
-int Node<T>::getData()
+T Node<T>::getData()
 {
   return m_dataContained;
 }

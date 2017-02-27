@@ -12,7 +12,7 @@ Queue<T>::~Queue()
 {
   while(!isEmpty())
   {
-    dequeue(m_front->getData());
+    dequeue();
   }
 }
 
@@ -35,9 +35,31 @@ void Queue<T>::enqueue(T val)
 }
 
 template <typename T>
-Node<T>* Queue<T>::dequeue(T val)
+T Queue<T>::dequeue()
 {
-  return new Node<T>(val);
+  if(isEmpty())
+  {
+    return nullptr;
+  }
+  else
+  {
+    if(m_size == 1)
+    {
+      m_size=0;
+      Node<T>* temp = m_front;
+      m_front=nullptr;
+      m_rear=nullptr;
+      return temp->getData();
+    }
+    else
+    {
+      Node<T>* temp = m_front;
+      m_front = m_front->getNext();
+      m_front->setPrev(nullptr);
+      m_size--;
+      return temp->getData();
+    }
+  }
 }
 
 template <typename T>
@@ -47,7 +69,7 @@ bool Queue<T>::isEmpty()
 }
 
 template <typename T>
-void Queue<T>::size()
+int Queue<T>::size()
 {
   return m_size;
 }

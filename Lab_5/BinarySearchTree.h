@@ -39,6 +39,7 @@ class BinarySearchTree
     void deleteMax(BSTNode<T>* subtree);
 
     BSTNode<T>* m_root;
+    int m_entries;
 };
 
 #include "BinarySearchTree.hpp"

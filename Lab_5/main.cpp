@@ -49,19 +49,19 @@ int main(int argc, char** argv)
     }
     else if(choice == 5)
     {
-      std::cout<<"PRE-ORDER: ";
+      std::cout<<"PRE ORDER: ";
       BST.preOrder();
       std::cout<<"\n";
     }
     else if(choice == 6)
     {
-      std::cout<<"IN-ORDER: ";
+      std::cout<<"IN ORDER: ";
       BST.inOrder();
       std::cout<<"\n";
     }
     else if(choice == 7)
     {
-      std::cout<<"LEVEL-ORDER: ";
+      std::cout<<"LEVEL ORDER: ";
       BST.levelOrder();
       std::cout<<"\n";
     }
