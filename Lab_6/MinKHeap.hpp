@@ -4,6 +4,7 @@ MinKHeap<T>::MinKHeap(int k, int size)
 {
   m_k = k;
   m_arraySize = size;
+  m_entries=0;
   theHeap = new T[size];
   for(int i=0; i<size; i++)
   {
@@ -17,6 +18,7 @@ MinKHeap<T>::MinKHeap(int k, int size, std::string fileName)
   m_k = k;
   m_arraySize = size;
   theHeap = new T[size];
+  m_entries=0;
   T value;
   int temp = 0;
   std::ifstream fileIn(fileName);
@@ -26,6 +28,7 @@ MinKHeap<T>::MinKHeap(int k, int size, std::string fileName)
     theHeap[temp] = value;
     std::cout<<value<<" ";
     temp++;
+    m_entries++;
   }
   for(int i=temp; i<size; i++)
   {
@@ -67,20 +70,51 @@ void MinKHeap<T>::remove(T val)
 template <typename T>
 void MinKHeap<T>::levelOrder()
 {
-  int temp=0;
-  int numonlevel =1;
-  for(int i=0; i<=5; i++)
-  {
-    for(int j=1; j<=numonlevel; j++)
-    {
-      printChildren(temp);
-      std::cout<<" ";
-      temp +=1;
-    }
-    numonlevel += 2;
-    std::cout<<"\n";
 
+  int currentMultiple = 1;
+  int currentLevel = 0;
+  for(int i=0; i<m_entries; i++)
+  {
+    if(i == currentMultiple)
+    {
+      currentLevel++;
+      currentMultiple = exp(m_k, currentLevel);
+      std::cout<<"\n";
+    }
+    std::cout<<theHeap[i]<<" ";
   }
+  // int numonlevel = exp(3,0);
+  // for(int i=0; i<numonlevel; i++)
+  // {
+  //   std::cout<<theHeap[i]<<" ";
+  // }
+  // std::cout<<"\n";
+  // numonlevel = exp(3,1);
+  // for(int i=1; i<numonlevel+1; i++)
+  // {
+  //   std::cout<<theHeap[i]<<" ";
+  // }
+  // std::cout<<"\n";
+  // numonlevel = exp(3,2);
+  // for(int i=3; i<numonlevel+3; i++)
+  // {
+  //   std::cout<<theHeap[i]<<" ";
+  // }
+
+  // int temp=0;
+  // int numonlevel =1;
+  // for(int i=0; i<=5; i++)
+  // {
+  //   for(int j=1; j<=numonlevel; j++)
+  //   {
+  //     printChildren(temp);
+  //     std::cout<<" ";
+  //     temp +=1;
+  //   }
+  //   numonlevel += 2;
+  //   std::cout<<"\n";
+  // }
+
 }
 
 template <typename T>
@@ -111,6 +145,21 @@ void MinKHeap<T>::printChildren(int parent)
 
 
   }
+}
+
+template <typename T>
+int MinKHeap<T>::exp(int num, int power)
+{
+  if(power == 0)
+  {
+    return 1;
+  }
+  int returnVal=num;
+  for(int i=1; i<power; i++)
+  {
+    returnVal *= returnVal;
+  }
+  return returnVal;
 }
 
 

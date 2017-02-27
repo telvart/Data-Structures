@@ -28,6 +28,7 @@ class MinKHeap
     int child(int parent, int childNum);
     void swap(int index1, int index2);
     void printChildren(int parent);
+    int exp(int num, int power);
 
     T* theHeap;
     int m_entries;
