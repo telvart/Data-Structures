@@ -73,15 +73,17 @@ void MinKHeap<T>::levelOrder()
 
   int currentMultiple = 1;
   int currentLevel = 0;
+  int lastMultiple = 0;
   for(int i=0; i<m_entries; i++)
   {
-    if(i == currentMultiple)
+    std::cout<<theHeap[i]<<" ";
+    if(i == currentMultiple - lastMultiple - 1)
     {
       currentLevel++;
+      lastMultiple = currentMultiple;
       currentMultiple = exp(m_k, currentLevel);
       std::cout<<"\n";
     }
-    std::cout<<theHeap[i]<<" ";
   }
   // int numonlevel = exp(3,0);
   // for(int i=0; i<numonlevel; i++)
