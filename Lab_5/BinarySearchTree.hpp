@@ -56,6 +56,7 @@ void BinarySearchTree<T>::insert(T key, BSTNode<T>* subtree)
     {
       BSTNode<T>* temp = new BSTNode<T>(key);
       subtree->setLeft(temp);
+      m_entries++;
     }
   }
   else if(key > subtree->getValue())
@@ -68,6 +69,7 @@ void BinarySearchTree<T>::insert(T key, BSTNode<T>* subtree)
     {
       BSTNode<T>* temp = new BSTNode<T>(key);
       subtree->setRight(temp);
+      m_entries++;
     }
 
   }
@@ -125,6 +127,15 @@ void BinarySearchTree<T>::deleteMin()
 template <typename T>
 void BinarySearchTree<T>::deleteMin(BSTNode<T>* subtree)
 {
+  if(subtree == m_root && m_root->getLeft() == nullptr)
+  {
+    BSTNode<T>* temp = subtree;
+    m_root = subtree->getRight();
+    delete temp;
+    m_entries--;
+    return;
+  }
+
   if(subtree->getLeft() != nullptr)
   {
     if(subtree->getLeft()->getLeft() != nullptr)
@@ -137,20 +148,16 @@ void BinarySearchTree<T>::deleteMin(BSTNode<T>* subtree)
       {
         BSTNode<T>* temp = subtree->getLeft();
         subtree->setLeft(subtree->getLeft()->getRight());
+        m_entries--;
         delete temp;
       }
       else
       {
         delete subtree->getLeft();
         subtree->setLeft(nullptr);
+        m_entries--;
       }
     }
-  }
-  else
-  {
-    BSTNode<T>* temp = subtree;
-    m_root = subtree->getRight();
-    delete temp;
   }
 }
 
@@ -164,7 +171,14 @@ template <typename T>
 void BinarySearchTree<T>::deleteMax(BSTNode<T>* subtree)
 {
 
-  //TODO: FIX THIS FUNCTION
+  if(subtree == m_root && subtree->getRight() == nullptr)
+  {
+    BSTNode<T>* temp = subtree;
+    m_root = subtree->getLeft();
+    m_entries--;
+    delete temp;
+  }
+
   if(subtree->getRight() != nullptr)
   {
     if(subtree->getRight()->getRight() != nullptr)
@@ -186,13 +200,6 @@ void BinarySearchTree<T>::deleteMax(BSTNode<T>* subtree)
       }
     }
   }
-  else
-  {
-    BSTNode<T>* temp = subtree;
-    m_root = subtree->getLeft();
-    delete temp;
-  }
-
 }
 
 template <typename T>
