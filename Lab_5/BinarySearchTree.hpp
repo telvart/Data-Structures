@@ -17,7 +17,7 @@ BinarySearchTree<T>::BinarySearchTree(std::string fileName)
   while(fileIn >> value)
   {
     std::cout<<value<<" ";
-    this->insert(value);
+    insert(value);
   }
   std::cout<<std::endl;
   fileIn.close();
@@ -46,6 +46,7 @@ template<typename T>
 void BinarySearchTree<T>::insert(T key, BSTNode<T>* subtree)
 {
   if(key == subtree->getValue()) {return;}
+
   if(key < subtree->getValue())
   {
     if(subtree->getLeft() != nullptr)
@@ -59,7 +60,7 @@ void BinarySearchTree<T>::insert(T key, BSTNode<T>* subtree)
       m_entries++;
     }
   }
-  else if(key > subtree->getValue())
+  else if(key >= subtree->getValue())
   {
     if(subtree->getRight() != nullptr)
     {
@@ -71,7 +72,6 @@ void BinarySearchTree<T>::insert(T key, BSTNode<T>* subtree)
       subtree->setRight(temp);
       m_entries++;
     }
-
   }
 }
 
@@ -107,20 +107,62 @@ BSTNode<T>* BinarySearchTree<T>::search(T key, BSTNode<T>* subtree)
 template <typename T>
 void BinarySearchTree<T>::removeVal(T key)
 {
+  if(m_root == nullptr) {return;}
 
+  m_root =removeVal(key, m_root);
 }
 
 template <typename T>
-void BinarySearchTree<T>::removeVal(T key, BSTNode<T>* subtree)
+BSTNode<T>* BinarySearchTree<T>::removeVal(T key, BSTNode<T>* subtree)
 {
+  if(key < subtree->getValue())
+  {
+    subtree->setLeft(removeVal(key, subtree->getLeft()));
+  }
+  else if(key > subtree->getValue())
+  {
+    subtree->setRight(removeVal(key, subtree->getRight()));
+  }
+  else
+  {
+    if(subtree->getLeft() == nullptr)
+    {
+      BSTNode<T>* temp = subtree->getRight();
+      delete subtree;
+      m_entries--;
+      return temp;
+    }
+    else if(subtree->getRight() == nullptr)
+    {
+      BSTNode<T>* temp = subtree->getLeft();
+      delete subtree;
+      m_entries--;
+      return temp;
+    }
 
+    BSTNode<T>* temp = findMin(subtree->getRight());
+    subtree->setValue(temp->getValue());
+    subtree->setRight(removeVal(temp->getValue(), subtree->getRight()));
+  }
+  return subtree;
 }
 
-
+template <typename T>
+BSTNode<T>* BinarySearchTree<T>::findMin(BSTNode<T>* subtree)
+{
+  BSTNode<T>* current = subtree;
+  while(current->getLeft() != nullptr)
+  {
+    current = current->getLeft();
+  }
+  return current;
+}
 
 template <typename T>
 void BinarySearchTree<T>::deleteMin()
 {
+  if(m_root == nullptr) {return;}
+
   deleteMin(m_root);
 }
 
@@ -135,7 +177,6 @@ void BinarySearchTree<T>::deleteMin(BSTNode<T>* subtree)
     m_entries--;
     return;
   }
-
   if(subtree->getLeft() != nullptr)
   {
     if(subtree->getLeft()->getLeft() != nullptr)
@@ -164,21 +205,22 @@ void BinarySearchTree<T>::deleteMin(BSTNode<T>* subtree)
 template <typename T>
 void BinarySearchTree<T>::deleteMax()
 {
+  if(m_root == nullptr) {return;}
+
   deleteMax(m_root);
 }
 
 template <typename T>
 void BinarySearchTree<T>::deleteMax(BSTNode<T>* subtree)
 {
-
   if(subtree == m_root && subtree->getRight() == nullptr)
   {
     BSTNode<T>* temp = subtree;
     m_root = subtree->getLeft();
     m_entries--;
     delete temp;
+    return;
   }
-
   if(subtree->getRight() != nullptr)
   {
     if(subtree->getRight()->getRight() != nullptr)
@@ -189,12 +231,14 @@ void BinarySearchTree<T>::deleteMax(BSTNode<T>* subtree)
     {
       if(subtree->getRight()->getLeft() != nullptr)
       {
-        BSTNode<T>* temp = subtree;
+        BSTNode<T>* temp = subtree->getRight();
         subtree->setRight(subtree->getRight()->getLeft());
+        m_entries--;
         delete temp;
       }
       else
       {
+        m_entries--;
         delete subtree->getRight();
         subtree->setRight(nullptr);
       }
@@ -248,10 +292,11 @@ void BinarySearchTree<T>::inOrder(BSTNode<T>* subtree)
 template <typename T>
 void BinarySearchTree<T>::levelOrder()
 {
-  Queue<BSTNode<T>*> queue = Queue<BSTNode<T>*>();
   if(m_root == nullptr) {return;}
 
+  Queue<BSTNode<T>*> queue = Queue<BSTNode<T>*>();
   queue.enqueue(m_root);
+
   while(!queue.isEmpty())
   {
     BSTNode<T>* currentNode = queue.dequeue();
@@ -268,18 +313,3 @@ void BinarySearchTree<T>::levelOrder()
   }
   std::cout<<std::endl;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//

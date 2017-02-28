@@ -46,18 +46,21 @@ T Queue<T>::dequeue()
     if(m_size == 1)
     {
       m_size=0;
-      Node<T>* temp = m_front;
+      T val = m_front->getData();
+      delete m_front;
       m_front=nullptr;
       m_rear=nullptr;
-      return temp->getData();
+      return val;
     }
     else
     {
       Node<T>* temp = m_front;
+      T val = m_front->getData();
       m_front = m_front->getNext();
+      delete temp;
       m_front->setPrev(nullptr);
       m_size--;
-      return temp->getData();
+      return val;
     }
   }
 }
