@@ -34,6 +34,7 @@ MinKHeap<T>::MinKHeap(int k, int size, std::string fileName)
   {
     theHeap[i] = T();
   }
+  heapify();
   std::cout<<"\n***************************"<<std::endl;
 }
 
@@ -46,7 +47,10 @@ MinKHeap<T>::~MinKHeap()
 template <typename T>
 void MinKHeap<T>::insert(T val)
 {
-
+  for(int i=1; i<=3; i++)
+  {
+    std::cout<<"Child "<<i<<" of "<<val<<": "<<child(val,i)<<"\n";
+  }
 }
 
 template <typename T>
@@ -71,52 +75,30 @@ template <typename T>
 void MinKHeap<T>::levelOrder()
 {
 
-  int currentMultiple = 1;
-  int currentLevel = 0;
-  int lastMultiple = 0;
-  for(int i=0; i<m_entries; i++)
-  {
-    std::cout<<theHeap[i]<<" ";
-    if(i == currentMultiple - lastMultiple - 1)
+  // int currentPower = 0;
+  // int currentMultiple = 0;
+  // int entries = 0;
+  // for(int i=0; i<m_entries; i++)
+  // {
+    std::cout<<theHeap[0]<<"\n";
+    for(int i=1; i<4; i++)
     {
-      currentLevel++;
-      lastMultiple = currentMultiple;
-      currentMultiple = exp(m_k, currentLevel);
-      std::cout<<"\n";
+      std::cout<<theHeap[i]<<" ";
     }
-  }
-  // int numonlevel = exp(3,0);
-  // for(int i=0; i<numonlevel; i++)
-  // {
-  //   std::cout<<theHeap[i]<<" ";
-  // }
-  // std::cout<<"\n";
-  // numonlevel = exp(3,1);
-  // for(int i=1; i<numonlevel+1; i++)
-  // {
-  //   std::cout<<theHeap[i]<<" ";
-  // }
-  // std::cout<<"\n";
-  // numonlevel = exp(3,2);
-  // for(int i=3; i<numonlevel+3; i++)
-  // {
-  //   std::cout<<theHeap[i]<<" ";
-  // }
+    std::cout<<"\n";
+    for(int i=4; i<13; i++)
+    {
+      std::cout<<theHeap[i]<<" ";
+    }
+    std::cout<<"\n";
+    for(int i=13; i<m_entries; i++)
+    {
+      std::cout<<theHeap[i]<<" ";
+    }
 
-  // int temp=0;
-  // int numonlevel =1;
-  // for(int i=0; i<=5; i++)
-  // {
-  //   for(int j=1; j<=numonlevel; j++)
-  //   {
-  //     printChildren(temp);
-  //     std::cout<<" ";
-  //     temp +=1;
-  //   }
-  //   numonlevel += 2;
-  //   std::cout<<"\n";
-  // }
 
+
+  //}
 }
 
 template <typename T>
@@ -132,9 +114,69 @@ int MinKHeap<T>::child(int parent, int childNum)
 }
 
 template <typename T>
-void MinKHeap<T>::swap(int index1, int index2)
+void MinKHeap<T>::heapify()
+{
+  int firstChecked = floor(m_entries/m_k) - 1;
+  std::cout<<"FIRST: "<<firstChecked<<"\n";
+  for(int i = firstChecked; i>=0; i--)
+  {
+    heapify(i);
+  }
+}
+
+template <typename T>
+void MinKHeap<T>::heapify(int index)
 {
 
+  int lowestChild=0;
+  T lowestVal = theHeap[index];
+  for(int i=1; i<=m_k; i++)
+  {
+    T cur = theHeap[child(index,i)];
+    if(cur < lowestVal)
+    {
+      lowestVal = cur;
+      lowestChild = i;
+    }
+  }
+
+  if(lowestChild != 0)
+  {
+    swap(child(index,lowestChild), index);
+  }
+
+
+  //std::cout<<index<<"\n";
+  // T lowest = theHeap[index];
+  // int lowestChild=1;
+  // for(int i=1; i<=m_k; i++)
+  // {
+  //
+  // }
+  // if (lowest != theHeap[index])
+  // {
+  //   swap(index, child(index,lowest));
+  // }
+
+
+  // for(int j=0; j<m_entries; j++)
+  // {
+  //   for(int i=m_entries-1; i>=0; i--)
+  //   {
+  //     if(theHeap[parent(i)] > theHeap[i])
+  //     {
+  //       swap(i, parent(i));
+  //     }
+  //   }
+  // }
+}
+
+template <typename T>
+void MinKHeap<T>::swap(int index1, int index2)
+{
+  T temp = theHeap[index1];
+  theHeap[index1] = theHeap[index2];
+  theHeap[index2] = temp;
 }
 
 template <typename T>
@@ -155,6 +197,10 @@ int MinKHeap<T>::exp(int num, int power)
   if(power == 0)
   {
     return 1;
+  }
+  if(power <0 )
+  {
+    return 0;
   }
   int returnVal=num;
   for(int i=1; i<power; i++)

@@ -22,13 +22,16 @@ class MinKHeap
     void remove(T val);
     void levelOrder();
 
-  private:
+  //private:
 
     int parent(int index);
     int child(int parent, int childNum);
     void swap(int index1, int index2);
     void printChildren(int parent);
     int exp(int num, int power);
+    void heapify(int index);
+    void heapify();
+
 
     T* theHeap;
     int m_entries;

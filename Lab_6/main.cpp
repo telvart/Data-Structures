@@ -48,6 +48,9 @@ int main(int argc, char** argv)
     }
     else if(choice == 5)
     {
+      //theHeap.levelOrder();
+      //std::cin>>value;
+      //std::cout<<"Parent of "<<value<<": "<<theHeap.parent(value)<<"\n";
       theHeap.levelOrder();
     }
 
