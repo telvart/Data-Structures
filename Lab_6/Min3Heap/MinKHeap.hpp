@@ -47,6 +47,10 @@ MinKHeap<T>::~MinKHeap()
 template <typename T>
 void MinKHeap<T>::insert(T val)
 {
+  if(m_entries==m_arraySize-1){return;}
+  theHeap[m_entries]=val;
+  m_entries++;
+  buildHeapify();
   //TODO
   //compute a location to insert and insert it,
   //before insertion reheapify the structure
@@ -85,9 +89,12 @@ void MinKHeap<T>::removeVal(T val)
   }
   if(index != -1)
   {
-    std::cout<<val<<" was found\n";
-    //remove the value and reheapify
-    //call remove on val again
+    std::cout<<val<<" was found at index "<<index<<"\n";
+    theHeap[index]=theHeap[m_entries-1];
+    theHeap[m_entries-1]=T();
+    m_entries--;
+    heapify(index);
+    removeVal(val);
   }
   else
   {
@@ -98,6 +105,7 @@ void MinKHeap<T>::removeVal(T val)
 template <typename T>
 void MinKHeap<T>::levelOrder()
 {
+  std::cout<<"\nLevel Order:\n\n";
   int currentLevel = 0;
   int currentMultiple = 1;
   int totalAbove = 0;
@@ -120,7 +128,7 @@ void MinKHeap<T>::levelOrder()
       currentMultiple = exp(m_k, currentLevel);
     }
   }
-  std::cout<<"\n";
+  std::cout<<"\n\n";
 }
 
 template <typename T>
