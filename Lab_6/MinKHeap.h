@@ -7,7 +7,6 @@
 #include <iostream>
 #include <math.h>
 
-
 template <typename T>
 class MinKHeap
 {
@@ -19,19 +18,18 @@ class MinKHeap
     void insert(T val);
     void deleteMin();
     void deleteMax();
-    void remove(T val);
+    void removeVal(T val);
     void levelOrder();
 
-  //private:
+  private:
 
     int parent(int index);
     int child(int parent, int childNum);
     void swap(int index1, int index2);
-    void printChildren(int parent);
-    int exp(int num, int power);
     void heapify(int index);
-    void heapify();
-
+    void buildHeapify();
+    int exp(int num, int power);
+    int findMax();
 
     T* theHeap;
     int m_entries;
