@@ -11,6 +11,7 @@ class Test
   public:
     void runTestSuite();
     double** buildTest();
+    double** operationsTest();
 
 
 

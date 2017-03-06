@@ -7,6 +7,6 @@
 int main(int argc, char** argv)
 {
   Test tester;
-  tester.buildTest();
+  tester.runTestSuite();
   //std::cout<<"Hello world!\n";
 }

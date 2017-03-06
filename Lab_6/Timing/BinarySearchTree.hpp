@@ -117,6 +117,7 @@ void BinarySearchTree<T>::removeVal(T key)
 template <typename T>
 BSTNode<T>* BinarySearchTree<T>::removeVal(T key, BSTNode<T>* subtree)
 {
+  //if(subtree == nullptr){return ;}
   if(key < subtree->getValue())
   {
     subtree->setLeft(removeVal(key, subtree->getLeft()));

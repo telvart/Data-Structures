@@ -3,16 +3,12 @@
 void Test::runTestSuite()
 {
   std::cout<<"\nBUILD TESTS:\n";
-  double* buildResults = new double[2];
-  srand(1);
-
-
+//  double** buildResults = buildTest();
+  double** opResults = operationsTest();
 
 }
 double** Test::buildTest()
 {
-  // MinKHeap<int> heap = MinKHeap<int>(3,2*n);
-  // BinarySearchTree<int> BST =BinarySearchTree<int>();
   Timer timer;
   double** results = new double*[4];
   for(int i=0; i<4; i++)
@@ -20,68 +16,182 @@ double** Test::buildTest()
     results[i] = new double[2];
   }
   double lastTime=0;
-  MinKHeap<int> heap = MinKHeap<int>(3,100000); //n=50000
-  MinKHeap<int> heap2 = MinKHeap<int>(3,100000); //n=100000
-  MinKHeap<int> heap3 = MinKHeap<int>(3,100000); //n
-  MinKHeap<int> heap4 = MinKHeap<int>(3,100000);
 
-  BinarySearchTree<int> BST = BinarySearchTree<int>();
-  BinarySearchTree<int> BST2 = BinarySearchTree<int>();
-  BinarySearchTree<int> BST3 = BinarySearchTree<int>();
-  BinarySearchTree<int> BST4 = BinarySearchTree<int>();
-
-
-  std::cout<<"BUILD TIMES:\n";
-  for(int i=0; i<5; i++)
+  int i, j, k, f = 0;
+  std::cout << "\nBUILD TIMES:\n";
+  for(i = 0; i < 5; i++)
   {
-    std::cout<<"Trial: "<<i+1<<"\n";
+    std::cout << "Trial: " << i+1 << "\n";
     srand(i+1);
-
-    int n=50000;
-    for(int i=0; i<4; i++)
+    int n = 50000;
+    for(j = 0; j < 4; j++)
     {
-      // for()
-      // {
-      //
-      // }
-      // for()
-      // {
-      //
-      // }
+      MinKHeap<int> heap = MinKHeap<int>(3, n+1);
+      BinarySearchTree<int> BST = BinarySearchTree<int>();
+
+      std::cout <<"n = " << n << "\nB Search Tree: ";
+      timer.start();
+      for(k = 0; k < n; k++)
+      {
+        BST.insert(rand() % 4*n +1);
+      }
+      lastTime = timer.stop();
+      results[j][0] += lastTime;
+
+      std::cout << lastTime << "\nMin 3 Heap: ";
+      timer.start();
+      for(f = 0; f < n; f++)
+      {
+        heap.theHeap[k] = rand() % 4*n + 1;
+        heap.m_entries++;
+      }
+      heap.buildHeapify();
+      lastTime = timer.stop();
+      results[j][1] += lastTime;
+      std::cout << lastTime << "\n\n";
+      n *= 2;
+
     }
-
-
-
-
-    // timer.start();
-    // for(int j=0; j<50000; j++)
-    // {
-    //   BST.insert(rand() % 200000 +1);
-    // }
-    // lastTime = timer.stop();
-    // std::cout<<"BST: "<<lastTime<<"\n";
-    // results[0][0]+=lastTime;
-    //
-    // timer.start();
-    // for(int k=0; k<50000; k++)
-    // {
-    //   heap.theHeap[k]=rand()%200000+1;
-    //   heap.m_entries++;
-    // }
-    // heap.buildHeapify();
-    // lastTime = timer.stop();
-    // std::cout<<"Min 3 Heap: "<<lastTime<<"\n\n";
-    // results[0][1]+=lastTime;
   }
-  // results[0][0]=results[0][0]/5;
-  // results[0][1]=results[0][1]/5;
-  // std::cout<<"Average after 5 trials\nBST: "<<results[0][0]<<"\nMin 3 Heap: "<<results[0][1]<<"\n";
+  for(i = 0; i < 4; i++)
+  {
+    for( j = 0; j < 2; j++)
+    {
+      results[i][j] = results[i][j] / 5;
+    }
+  }
 
-
-
-
+  std::cout << "\n\nAVERAGES AFTER 5 TRIALS:\n"
+            << "\nn = 50,000  BST: "<<results[0][0]<<" Min 3 Heap: "<<results[0][1]
+            << "\nn = 100,000 BST: "<<results[1][0]<<" Min 3 Heap: "<<results[1][1]
+            << "\nn = 200,000 BST: "<<results[2][0]<<" Min 3 Heap: "<<results[2][1]
+            << "\nn = 400,000 BST: "<<results[3][0]<<" Min 3 Heap: "<<results[3][1]<<"\n\n";
 
   return results;
 
-
 }
+
+double** Test::operationsTest()
+{
+  double** results = new double*[4];
+  Timer timer;
+  for(int i=0; i<4; i++)
+  {
+    results[i]=new double[2];
+  }
+  double lastTime=0;
+
+  for(int i=0; i<5; i++)
+  {
+    srand(i+1);
+    int n=50000;
+
+    for(int j=0; j<4; j++)
+    {
+      MinKHeap<int> heap = MinKHeap<int>(3, n+1);
+      BinarySearchTree<int> BST = BinarySearchTree<int>();
+
+      for(int k=0; k<n; k++)
+      {
+        BST.insert(rand() % 4*n +1);
+      }
+      for(int k=0; k<n; k++)
+      {
+        heap.theHeap[i] = rand() % 4*n +1;
+        heap.m_entries++;
+      }
+      heap.buildHeapify();
+
+      for(double k=0; k<0.1*n; k++)
+      {
+        double x = (double)rand() / RAND_MAX;
+        if( x >= 0 && x < 0.1)
+        {
+          timer.start();
+          BST.deleteMin();
+          lastTime = timer.stop();
+          timer.start();
+          heap.deleteMin();
+          lastTime = timer.stop();
+        }
+        else if(x >= 0.1 && x < 0.2)
+        {
+          timer.start();
+          BST.deleteMax();
+          timer.stop();
+          timer.start();
+          heap.deleteMin();
+          timer.stop();
+        }
+        else if(x >= 0.2 && x < 0.5)
+        {
+          int y = rand() % 4*n +1;
+          timer.start();
+        //  BST.removeVal(y);
+          timer.stop();
+          timer.start();
+        //  heap.removeVal(y);
+          timer.stop();
+        }
+        else
+        {
+          int y = rand() % 4*n + 1;
+          timer.start();
+          BST.insert(y);
+          timer.stop();
+          timer.start();
+          heap.insert(y);
+          timer.stop();
+        }
+      }
+
+
+
+
+
+
+
+
+      n *= 2;
+    }
+
+
+  }
+
+
+
+
+
+
+  return nullptr;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//

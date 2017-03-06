@@ -106,16 +106,12 @@ void MinKHeap<T>::removeVal(T val)
   }
   if(index != -1)
   {
-    std::cout<<val<<" was found at index "<<index<<"\n";
+  //  std::cout<<val<<" was found at index "<<index<<"\n";
     theHeap[index]=theHeap[m_entries-1];
     theHeap[m_entries-1]=T();
     m_entries--;
     heapify(index);
     removeVal(val);
-  }
-  else
-  {
-    std::cout<<val<<" was not found\n";
   }
 }
 
