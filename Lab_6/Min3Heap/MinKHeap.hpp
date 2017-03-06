@@ -47,13 +47,30 @@ MinKHeap<T>::~MinKHeap()
 template <typename T>
 void MinKHeap<T>::insert(T val)
 {
-  if(m_entries==m_arraySize-1){return;}
-  theHeap[m_entries]=val;
+  if(m_entries == m_arraySize)
+  {
+    return;
+  }
   m_entries++;
-  buildHeapify();
-  //TODO
-  //compute a location to insert and insert it,
-  //before insertion reheapify the structure
+  theHeap[m_entries-1] = val;
+  upHeap(m_entries-1);
+
+
+}
+
+template <typename T>
+void MinKHeap<T>::upHeap(int index)
+{
+  int parentIndex;
+  if(index != 0)
+  {
+    parentIndex = parent(index);
+    if(theHeap[parentIndex] > theHeap[index])
+    {
+      swap(parentIndex, index);
+      upHeap(parentIndex);
+    }
+  }
 }
 
 template <typename T>

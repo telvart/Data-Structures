@@ -45,8 +45,8 @@ void BinarySearchTree<T>::insert(T key)
 template<typename T>
 void BinarySearchTree<T>::insert(T key, BSTNode<T>* subtree)
 {
-  if(key == subtree->getValue()) {return;}
-
+  //if(key == subtree->getValue()) {return;}
+  std::cout<<"INSERT CALLED\n";
   if(key < subtree->getValue())
   {
     if(subtree->getLeft() != nullptr)

@@ -30,6 +30,7 @@ class MinKHeap
     void buildHeapify();
     int exp(int num, int power);
     int findMax();
+    void upHeap(int index);
 
     T* theHeap;
     int m_entries;

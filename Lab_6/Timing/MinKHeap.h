@@ -21,7 +21,7 @@ class MinKHeap
     void removeVal(T val);
     void levelOrder();
 
-  private:
+  //private:
 
     int parent(int index);
     int child(int parent, int childNum);
@@ -30,6 +30,7 @@ class MinKHeap
     void buildHeapify();
     int exp(int num, int power);
     int findMax();
+    void upHeap(int index);
 
     T* theHeap;
     int m_entries;

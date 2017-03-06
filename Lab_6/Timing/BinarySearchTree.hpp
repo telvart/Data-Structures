@@ -58,9 +58,10 @@ void BinarySearchTree<T>::insert(T key, BSTNode<T>* subtree)
       BSTNode<T>* temp = new BSTNode<T>(key);
       subtree->setLeft(temp);
       m_entries++;
+      return;
     }
   }
-  else if(key >= subtree->getValue())
+  else// if(key >= subtree->getValue())
   {
     if(subtree->getRight() != nullptr)
     {
@@ -71,6 +72,7 @@ void BinarySearchTree<T>::insert(T key, BSTNode<T>* subtree)
       BSTNode<T>* temp = new BSTNode<T>(key);
       subtree->setRight(temp);
       m_entries++;
+      return;
     }
   }
 }

@@ -9,8 +9,8 @@
 class Test
 {
   public:
-    void runTestSuite(int numAvg, int n);
-    double* singleBuildTest(int n);
+    void runTestSuite();
+    double** buildTest();
 
 
 

@@ -7,6 +7,6 @@
 int main(int argc, char** argv)
 {
   Test tester;
-  tester.singleBuildTest(50000);
+  tester.buildTest();
   //std::cout<<"Hello world!\n";
 }
