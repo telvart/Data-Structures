@@ -3,8 +3,18 @@
 void Test::runTestSuite()
 {
   std::cout<<"\nBUILD TESTS:\n";
-//  double** buildResults = buildTest();
+  double** buildResults = buildTest();
   double** opResults = operationsTest();
+  std::cout << "RESULTS\nBUILD: "
+            << "\nn = 50,000  BST: "<<buildResults[0][0]<<" Min 3 Heap: "<<buildResults[0][1]
+            << "\nn = 100,000 BST: "<<buildResults[1][0]<<" Min 3 Heap: "<<buildResults[1][1]
+            << "\nn = 200,000 BST: "<<buildResults[2][0]<<" Min 3 Heap: "<<buildResults[2][1]
+            << "\nn = 400,000 BST: "<<buildResults[3][0]<<" Min 3 Heap: "<<buildResults[3][1]
+            << "\nOPERATIONS:"
+            << "\nn = 50,000  BST: "<<opResults[0][0]<<" Min 3 Heap: "<<opResults[0][1]
+            << "\nn = 100,000 BST: "<<opResults[1][0]<<" Min 3 Heap: "<<opResults[1][1]
+            << "\nn = 200,000 BST: "<<opResults[2][0]<<" Min 3 Heap: "<<opResults[2][1]
+            << "\nn = 400,000 BST: "<<opResults[3][0]<<" Min 3 Heap: "<<opResults[3][1]<<"\n\n";
 
 }
 double** Test::buildTest()
@@ -110,60 +120,63 @@ double** Test::operationsTest()
           timer.start();
           BST.deleteMin();
           lastTime = timer.stop();
+          results[j][0] += lastTime;
           timer.start();
           heap.deleteMin();
           lastTime = timer.stop();
+          results[j][1] += lastTime;
         }
         else if(x >= 0.1 && x < 0.2)
         {
           timer.start();
           BST.deleteMax();
-          timer.stop();
+          lastTime += timer.stop();
+          results[j][0] += lastTime;
           timer.start();
           heap.deleteMin();
-          timer.stop();
+          lastTime = timer.stop();
+          results[j][1] += lastTime;
         }
         else if(x >= 0.2 && x < 0.5)
         {
-          int y = rand() % 4*n +1;
-          timer.start();
+        //  int y = rand() % 4*n +1;
+        //  timer.start();
         //  BST.removeVal(y);
-          timer.stop();
-          timer.start();
+        //  timer.stop();
+        //  timer.start();
         //  heap.removeVal(y);
-          timer.stop();
+        //  timer.stop();
         }
         else
         {
           int y = rand() % 4*n + 1;
           timer.start();
           BST.insert(y);
-          timer.stop();
+          lastTime = timer.stop();
+          results[j][0] += lastTime;
           timer.start();
           heap.insert(y);
-          timer.stop();
+          lastTime = timer.stop();
+          results[j][1] += lastTime;
         }
       }
-
-
-
-
-
-
-
-
       n *= 2;
     }
-
-
   }
+  for(int i=0; i<4; i++)
+  {
+    for(int j=0; j<2; j++)
+    {
+      results[i][j] = results[i][j]/5;
+    }
+  }
+  std::cout << "\n\nAVERAGES AFTER 5 TRIALS:\n"
+            << "\nn = 50,000  BST: "<<results[0][0]<<" Min 3 Heap: "<<results[0][1]
+            << "\nn = 100,000 BST: "<<results[1][0]<<" Min 3 Heap: "<<results[1][1]
+            << "\nn = 200,000 BST: "<<results[2][0]<<" Min 3 Heap: "<<results[2][1]
+            << "\nn = 400,000 BST: "<<results[3][0]<<" Min 3 Heap: "<<results[3][1]<<"\n\n";
 
-
-
-
-
-
-  return nullptr;
+  return results;
 }
 
 
