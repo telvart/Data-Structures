@@ -5,6 +5,7 @@
 #include <string>
 #include <fstream>
 #include <iostream>
+#include <math.h>
 
 class MinMaxHeap
 {
@@ -22,6 +23,7 @@ class MinMaxHeap
   private:
 
     int exp(int num, int power);
+
     int* theHeap;
     int m_entries;
     int m_arraySize;
