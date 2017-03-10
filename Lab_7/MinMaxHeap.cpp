@@ -17,10 +17,11 @@ MinMaxHeap::MinMaxHeap(int arraySize, std::string fileName)
   std::cout<<fileName<<" elements: ";
   while (fileIn>>value)
   {
-    theHeap[m_entries+1]=value;
-    std::cout<<value<<" ";
     m_entries++;
+    theHeap[m_entries]=value;
+    std::cout<<value<<" ";
   }
+  build();
   std::cout<<"\n**************************\n\n";
 }
 
@@ -31,7 +32,9 @@ MinMaxHeap::~MinMaxHeap()
 
 void MinMaxHeap::insert(int val)
 {
-
+  m_entries++;
+  theHeap[m_entries] = val;
+  bubbleUp(m_entries);
 }
 
 void MinMaxHeap::deletemin()
@@ -46,7 +49,6 @@ void MinMaxHeap::deletemax()
 
 void MinMaxHeap::levelorder()
 {
-  int currentLevel=0;
   int currentMultiple=1;
   int totalAbove=0;
   std::cout<<"\nLevel Order:\n";
@@ -58,25 +60,10 @@ void MinMaxHeap::levelorder()
     {
       std::cout<<"\n";
       totalAbove = i;
-      currentLevel++;
       currentMultiple *= 2;
     }
   }
   std::cout<<"\n\n";
-}
-
-int MinMaxHeap::exp(int num, int power)
-{
-  if(power == 0)
-  {
-    return 1;
-  }
-  int returnValue = num;
-  for(int i=1; i < power; i++)
-  {
-    returnValue *= returnValue;
-  }
-  return returnValue;
 }
 
 bool MinMaxHeap::onMinLevel(double index)
@@ -87,6 +74,11 @@ bool MinMaxHeap::onMinLevel(double index)
 int MinMaxHeap::parent(int index)
 {
   return index/2;
+}
+
+int MinMaxHeap::grandParent(int index)
+{
+  return index/4;
 }
 
 int MinMaxHeap::child(int index, int childNum)
@@ -108,39 +100,260 @@ void MinMaxHeap::trickleDown(int index)
 
 void MinMaxHeap::trickleDownMin(int index)
 {
+  int m = minOfChildrenGrandChildren(index);
+  if(isGrandChild(index,m))
+  {
+    if(theHeap[m] < theHeap[index])
+    {
+        swap(index,m);
+        if(theHeap[m] > theHeap[parent(m)])
+        {
+          swap(m,parent(m));
+        }
+        trickleDownMin(m);
+    }
+  }
+  else
+  {
+    if(theHeap[m] < theHeap[index])
+    {
+      swap(m,index);
+    }
+  }
 
 }
 
 void MinMaxHeap::trickleDownMax(int index)
 {
-
+  int m = maxOfChildrenGrandChildren(index);
+  if(isGrandChild(index, m))
+  {
+    if(theHeap[m] > theHeap[index])
+    {
+      swap(m,index);
+      if(theHeap[m] < theHeap[parent(m)])
+      {
+        swap(m,parent(m));
+      }
+      trickleDownMax(m);
+    }
+  }
+  else
+  {
+    if(theHeap[m] > theHeap[index])
+    {
+      swap(m,index);
+    }
+  }
 }
 
 void MinMaxHeap::bubbleUp(int index)
 {
-
+  int Parent = parent(index);
+  if(onMinLevel(index))
+  {
+    if(index > 1 && theHeap[index] > theHeap[Parent])
+    {
+      swap(index, Parent);
+      bubbleUpMax(Parent);
+    }
+    else
+    {
+      bubbleUpMin(index);
+    }
+  }
+  else
+  {
+    if(index > 1 && theHeap[index] < theHeap[Parent])
+    {
+      swap(index, Parent);
+      bubbleUpMin(Parent);
+    }
+    else
+    {
+      bubbleUpMax(index);
+    }
+  }
 }
 
 void MinMaxHeap::bubbleUpMin(int index)
 {
-
+  int grandparent = grandParent(index);
+  if(grandparent > 0)
+  {
+    if(theHeap[index] < theHeap[grandparent])
+    {
+      swap(index, grandparent);
+      bubbleUpMin(grandparent);
+    }
+  }
 }
 
 void MinMaxHeap::bubbleUpMax(int index)
 {
-
+  int grandparent = grandParent(index);
+  if(grandparent > 0)
+  {
+    if(theHeap[index] > theHeap[grandparent])
+    {
+      swap(index, grandparent);
+      bubbleUpMax(grandparent);
+    }
+  }
 }
 
 int MinMaxHeap::minOfChildrenGrandChildren(int index)
 {
-  if(child(index,0) <= m_entries)
-  {
+  int returnIndex = index;
+  int minValue = theHeap[index];
 
+  int firstChild = child(index,0);
+  int secondChild= child(index,1);
+  int firstGrand = child(child(index,0),0);
+  int secondGrand= child(child(index,0),1);
+  int thirdGrand = child(child(index,1),0);
+  int fourthGrand= child(child(index,1),1);
+
+  if(firstChild <= m_entries)
+  {
+    if(theHeap[firstChild] < minValue)
+    {
+      minValue = theHeap[firstChild];
+      returnIndex = firstChild;
+    }
+    if(firstGrand <= m_entries)
+    {
+      if(theHeap[firstGrand] < minValue)
+      {
+        minValue = theHeap[firstGrand];
+        returnIndex = firstGrand;
+      }
+    }
+    if(secondGrand <= m_entries)
+    {
+      if(theHeap[secondGrand] < minValue)
+      {
+        minValue = theHeap[secondGrand];
+        returnIndex = secondGrand;
+      }
+    }
   }
-  return 1;
+  if( secondChild <= m_entries)
+  {
+    if(theHeap[secondChild] < minValue)
+    {
+      minValue = theHeap[secondChild];
+      returnIndex = secondChild;
+    }
+    if(thirdGrand <= m_entries)
+    {
+      if(theHeap[thirdGrand] < minValue)
+      {
+        minValue = theHeap[thirdGrand];
+        returnIndex = thirdGrand;
+      }
+    }
+    if(fourthGrand <= m_entries)
+    {
+      if(theHeap[fourthGrand] < minValue)
+      {
+        minValue = theHeap[fourthGrand];
+        returnIndex = fourthGrand;
+      }
+    }
+  }
+  return returnIndex;
 }
 
 int MinMaxHeap::maxOfChildrenGrandChildren(int index)
 {
-  return 1;
+  int returnIndex = index;
+  int maxValue = theHeap[index];
+
+  int firstChild = child(index,0);
+  int secondChild= child(index,1);
+  int firstGrand = child(child(index,0),0);
+  int secondGrand= child(child(index,0),1);
+  int thirdGrand = child(child(index,1),0);
+  int fourthGrand= child(child(index,1),1);
+
+  if(firstChild <= m_entries)
+  {
+    if(theHeap[firstChild] > maxValue)
+    {
+      maxValue = theHeap[firstChild];
+      returnIndex = firstChild;
+    }
+    if(firstGrand <= m_entries)
+    {
+      if(theHeap[firstGrand > maxValue])
+      {
+        maxValue = theHeap[firstGrand];
+        returnIndex = firstGrand;
+      }
+    }
+    if(secondGrand <= m_entries)
+    {
+      if(theHeap[secondGrand] > maxValue)
+      {
+        maxValue = theHeap[secondGrand];
+        returnIndex = secondGrand;
+      }
+    }
+  }
+  if( secondChild <= m_entries)
+  {
+    if(theHeap[secondChild] > maxValue)
+    {
+      maxValue = theHeap[secondChild];
+      returnIndex = secondChild;
+    }
+    if(thirdGrand <= m_entries)
+    {
+      if(theHeap[thirdGrand] > maxValue)
+      {
+        maxValue = theHeap[thirdGrand];
+        returnIndex = thirdGrand;
+      }
+    }
+    if(fourthGrand <= m_entries)
+    {
+      if(theHeap[fourthGrand] > maxValue)
+      {
+        maxValue = theHeap[fourthGrand];
+        returnIndex = fourthGrand;
+      }
+    }
+  }
+  return returnIndex;
+}
+
+void MinMaxHeap::swap(int index1, int index2)
+{
+    int temp = theHeap[index1];
+    theHeap[index1]=theHeap[index2];
+    theHeap[index2]=temp;
+}
+
+bool MinMaxHeap::isGrandChild(int index, int grandchild)
+{
+  int firstGrand = child(child(index,0),0);
+  int secondGrand= child(child(index,0),1);
+  int thirdGrand = child(child(index,1),0);
+  int fourthGrand= child(child(index,1),1);
+
+  if(grandchild == firstGrand || grandchild == secondGrand
+     || grandchild == thirdGrand || grandchild == fourthGrand)
+  {
+    return true;
+  }
+  return false;
+}
+
+void MinMaxHeap::build()
+{
+  for(int i=parent(m_entries); i >0; i--)
+  {
+    trickleDown(i);
+  }
 }
