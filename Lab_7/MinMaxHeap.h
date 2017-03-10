@@ -23,7 +23,22 @@ class MinMaxHeap
   private:
 
     int exp(int num, int power);
+    bool onMinLevel(double index);
 
+    void trickleDown(int index);
+    void trickleDownMin(int index);
+    void trickleDownMax(int index);
+
+    void bubbleUp(int index);
+    void bubbleUpMin(int index);
+    void bubbleUpMax(int index);
+
+    int minOfChildrenGrandChildren(int index);
+    int maxOfChildrenGrandChildren(int index);
+
+
+    int parent(int index);
+    int child(int index, int childNum);
     int* theHeap;
     int m_entries;
     int m_arraySize;

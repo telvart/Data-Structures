@@ -23,8 +23,10 @@ int main()
     std::cin>>choice;
     if(choice == 1)
     {
+    //  std::cout<<"\n"<<heap.minLevel(3);
       std::cout<<"Enter a value to insert:\n";
       std::cin>>value;
+      //std::cout<<"\n"<<heap.onMinLevel(value)<<"\n";
       heap.insert(value);
     }
     else if(choice == 2)

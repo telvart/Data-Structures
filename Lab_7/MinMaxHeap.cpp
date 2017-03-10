@@ -17,7 +17,7 @@ MinMaxHeap::MinMaxHeap(int arraySize, std::string fileName)
   std::cout<<fileName<<" elements: ";
   while (fileIn>>value)
   {
-    theHeap[m_entries]=value;
+    theHeap[m_entries+1]=value;
     std::cout<<value<<" ";
     m_entries++;
   }
@@ -49,29 +49,20 @@ void MinMaxHeap::levelorder()
   int currentLevel=0;
   int currentMultiple=1;
   int totalAbove=0;
-  for(int i = 0; i<m_entries; i++)
+  std::cout<<"\nLevel Order:\n";
+  for(int i = 1; i<=m_entries; i++)
   {
-    std::cout<<theHeap[i];
+    std::cout<<theHeap[i]<<" ";
 
-    if( i % 2 == 0 && i != currentMultiple + totalAbove - 1)
-    {
-      std::cout<<"-";
-    }
-    else
-    {
-      std::cout<<" ";
-    }
-
-    if(i == currentMultiple + totalAbove - 1)
+    if(i == currentMultiple + totalAbove)
     {
       std::cout<<"\n";
-      totalAbove = i+1;
+      totalAbove = i;
       currentLevel++;
-      currentMultiple = exp(2, currentLevel);
+      currentMultiple *= 2;
     }
-
   }
-  std::cout<<"\n";
+  std::cout<<"\n\n";
 }
 
 int MinMaxHeap::exp(int num, int power)
@@ -86,4 +77,70 @@ int MinMaxHeap::exp(int num, int power)
     returnValue *= returnValue;
   }
   return returnValue;
+}
+
+bool MinMaxHeap::onMinLevel(double index)
+{
+  return (int)floor(log(index)/log(2)) % 2 == 0;
+}
+
+int MinMaxHeap::parent(int index)
+{
+  return index/2;
+}
+
+int MinMaxHeap::child(int index, int childNum)
+{
+  return(2*index + childNum);
+}
+
+void MinMaxHeap::trickleDown(int index)
+{
+  if(onMinLevel(index))
+  {
+    trickleDownMin(index);
+  }
+  else
+  {
+    trickleDownMax(index);
+  }
+}
+
+void MinMaxHeap::trickleDownMin(int index)
+{
+
+}
+
+void MinMaxHeap::trickleDownMax(int index)
+{
+
+}
+
+void MinMaxHeap::bubbleUp(int index)
+{
+
+}
+
+void MinMaxHeap::bubbleUpMin(int index)
+{
+
+}
+
+void MinMaxHeap::bubbleUpMax(int index)
+{
+
+}
+
+int MinMaxHeap::minOfChildrenGrandChildren(int index)
+{
+  if(child(index,0) <= m_entries)
+  {
+
+  }
+  return 1;
+}
+
+int MinMaxHeap::maxOfChildrenGrandChildren(int index)
+{
+  return 1;
 }
