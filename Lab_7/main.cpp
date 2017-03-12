@@ -4,7 +4,8 @@
 
 void printMenu()
 {
-    std::cout<<"Please choose one of the following commands:\n"
+    std::cout<<"********************************************\n"
+             <<"Please choose one of the following commands:\n"
              <<"1) Insert\n"
              <<"2) Delete Min\n"
              <<"3) Delete Max\n"

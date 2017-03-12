@@ -22,7 +22,7 @@ MinMaxHeap::MinMaxHeap(int arraySize, std::string fileName)
     std::cout<<value<<" ";
   }
   build();
-  std::cout<<"\n**************************\n\n";
+  std::cout<<"\n\n";
 }
 
 MinMaxHeap::~MinMaxHeap()
@@ -39,11 +39,42 @@ void MinMaxHeap::insert(int val)
 
 void MinMaxHeap::deletemin()
 {
-
+  if (m_entries == 0) {return;}
+  else if (m_entries == 1) {m_entries--;}
+  else if (m_entries == 2)
+  {
+    swap(1,2);
+    m_entries--;
+  }
+  else
+  {
+    theHeap[1] = theHeap[m_entries];
+    m_entries--;
+    trickleDown(1);
+  }
 }
 
 void MinMaxHeap::deletemax()
 {
+  if (m_entries == 0) {return;}
+  else if (m_entries == 1) {m_entries--;}
+  else if (m_entries == 2)
+  {
+    swap(1,2);
+    m_entries--;
+  }
+  else
+  {
+    int max = maxOfChildrenGrandChildren(1,true);
+    int secondMax = maxOfChildrenGrandChildren(max,true);
+    std::cout<<max<<"\n";
+    std::cout<<secondMax<<"\n";
+    theHeap[max]=theHeap[secondMax];
+    theHeap[secondMax] = theHeap[m_entries];
+    m_entries--;
+
+    bubbleUp(secondMax);
+  }
 
 }
 
@@ -125,7 +156,7 @@ void MinMaxHeap::trickleDownMin(int index)
 
 void MinMaxHeap::trickleDownMax(int index)
 {
-  int m = maxOfChildrenGrandChildren(index);
+  int m = maxOfChildrenGrandChildren(index,false);
   if(isGrandChild(index, m))
   {
     if(theHeap[m] > theHeap[index])
@@ -265,10 +296,15 @@ int MinMaxHeap::minOfChildrenGrandChildren(int index)
   return returnIndex;
 }
 
-int MinMaxHeap::maxOfChildrenGrandChildren(int index)
+int MinMaxHeap::maxOfChildrenGrandChildren(int index, bool deleting)
 {
   int returnIndex = index;
   int maxValue = theHeap[index];
+  if(deleting)
+  {
+    returnIndex = child(index,0);
+    maxValue = theHeap[returnIndex];
+  }
 
   int firstChild = child(index,0);
   int secondChild= child(index,1);

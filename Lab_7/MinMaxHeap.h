@@ -41,7 +41,7 @@ class MinMaxHeap
     void bubbleUpMax(int index);
 
     int minOfChildrenGrandChildren(int index);
-    int maxOfChildrenGrandChildren(int index);
+    int maxOfChildrenGrandChildren(int index, bool deleting);
 
     int* theHeap;
     int m_entries;
