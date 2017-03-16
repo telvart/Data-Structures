@@ -5,7 +5,7 @@ LHNode::LHNode()
   m_left=nullptr;
   m_right=nullptr;
   m_value=0;
-  m_rank=1;
+  m_rank=0;
 }
 
 LHNode::LHNode(int val)
@@ -13,7 +13,7 @@ LHNode::LHNode(int val)
   m_value=val;
   m_left=nullptr;
   m_right=nullptr;
-  m_rank=1;
+  m_rank=0;
 }
 
 LHNode::~LHNode()

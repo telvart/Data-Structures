@@ -19,8 +19,6 @@ public:
   void setLeft(LHNode* left);
   void setRight(LHNode* right);
 
-//private:
-
   int m_rank;
   int m_value;
   LHNode* m_left;

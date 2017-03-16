@@ -26,27 +26,31 @@ int main(int argc, char** argv)
 
     if(choice == 1)
     {
-      //std::cout<<"BLAHJ\n";
-      //std::cout<<"Please enter a value to insert:\n";
+      std::cout<<"Please enter a value to insert:\n";
       std::cin>>value;
       heap.insert(value);
     }
+
     else if(choice == 2)
     {
       heap.deleteMin();
     }
+
     else if(choice == 3)
     {
       heap.preOrder();
     }
+
     else if(choice == 4)
     {
       heap.inOrder();
     }
+
     else if(choice == 5)
     {
       heap.levelOrder();
     }
+    
   }while(choice != 6);
 
 

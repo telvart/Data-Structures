@@ -2,15 +2,21 @@
 
 LeftistHeap::LeftistHeap()
 {
-
+  m_root = nullptr;
 }
 
 LeftistHeap::LeftistHeap(std::string fileName)
 {
   std::ifstream fileIn(fileName);
   m_root = nullptr;
-
-
+  int value;
+  std::cout<<fileName<<" values: ";
+  while(fileIn>>value)
+  {
+    std::cout<<value<<" ";
+    insert(value);
+  }
+  fileIn.close();
 }
 
 LeftistHeap::~LeftistHeap()
@@ -20,12 +26,13 @@ LeftistHeap::~LeftistHeap()
 
 void LeftistHeap::insert(int val)
 {
-  m_root = insert(val,m_root);
+  LHNode* temp = new LHNode(val);
+  m_root = merge(m_root, temp);
 }
 
 void LeftistHeap::deleteMin()
 {
-
+  m_root = merge(m_root->m_left, m_root->m_right);
 }
 
 void LeftistHeap::preOrder()
@@ -46,12 +53,25 @@ void LeftistHeap::levelOrder()
 {
   if (m_root == nullptr) {return;}
 
+  std::cout<<"\nLEVEL ORDER: \n\n";
   Queue<LHNode*> queue = Queue<LHNode*>();
   queue.enqueue(m_root);
-  //queue.enqueueBack(nullptr); when this shows up, print new line and add to end of queue
+  queue.enqueue(nullptr); //when this shows up, print new line and add to end of queue
+
   while(!queue.isEmpty())
   {
     LHNode* currentNode = queue.dequeue();
+    if(currentNode == nullptr)
+    {
+      std::cout<<"\n";
+      if(!queue.isEmpty())
+      {
+        currentNode = queue.dequeue();
+        queue.enqueue(nullptr);
+      }
+      else {return;}
+    }
+
     std::cout<<currentNode->m_value<<" ";
 
     if(currentNode->getLeft() != nullptr)
@@ -63,13 +83,13 @@ void LeftistHeap::levelOrder()
       queue.enqueue(currentNode->m_right);
     }
   }
+  std::cout<<"\n";
 }
 
 bool LeftistHeap::isEmpty()
 {
   return m_root == nullptr;
 }
-
 
 void LeftistHeap::preOrder(LHNode* subtree)
 {
@@ -78,7 +98,6 @@ void LeftistHeap::preOrder(LHNode* subtree)
   std::cout<<subtree->m_value<<" ";
   preOrder(subtree->m_left);
   preOrder(subtree->m_right);
-
 }
 
 void LeftistHeap::inOrder(LHNode* subtree)
@@ -99,89 +118,35 @@ void LeftistHeap::deleteTree(LHNode* subtree)
   delete subtree;
 }
 
-
-LHNode* LeftistHeap::insert(int val, LHNode* subtree)
-{
-  return merge(subtree, new LHNode(val));
-}
-
-LHNode* LeftistHeap::minOfTree(LHNode* subtree)
-{
-  return m_root;
-}
 LHNode* LeftistHeap::merge(LHNode* h1, LHNode* h2)
 {
-  if(h1 == nullptr)
-  {
-    return h2;
-  }
-  else if(h2 == nullptr)
-  {
-    return h1;
-  }
+  if(h1 == nullptr) {return h2;}
+  else if(h2 == nullptr) {return h1;}
+
   else if (h1->m_value > h2->m_value)
   {
-    swap(h1,h2);
+    LHNode* temp = h1; //swaps h1 and h2, function was not working
+    h1=h2;
+    h2 = temp;
   }
-  h1->m_right = merge(h1->m_right, h2);
-  h1->m_rank = h1->m_right->m_rank + 1;
 
+  h1->m_right = merge(h1->m_right, h2);
 
   if(h1->m_left == nullptr)
   {
     h1->m_left = h1->m_right;
+    h1->m_right = nullptr;
   }
 
   if(h1->m_left != nullptr && h1->m_right != nullptr)
   {
     if(h1->m_left->m_rank < h1->m_right->m_rank)
     {
-      LHNode* temp = h1->m_left;
+      LHNode* temp = h1->m_left; //swaps the left and right child
       h1->m_left=h1->m_right;
       h1->m_right=temp;
-      //swap(h1->m_left, h1->m_right);
     }
+    h1->m_rank = h1->m_right->m_rank + 1;
   }
-
   return h1;
-  // if(h1->getVal() > h2->getVal())
-  // {
-  //   swap(h1,h2);
-  // }
-  // if(h1->getRight() == nullptr)
-  // {
-  //   h1->setRight(h2);
-  // }
-  // else
-  // {
-  //   h1->setRight(merge(h1->getRight(), h2));
-  // }
-  // if(h1->getLeft()->getRank() < h1->getRight()->getRank())
-  // {
-  //   swap(h1->getLeft(),h1->getRight());
-  // }
-  // h1->setRank(h1->getRight()->getRank() + 1);
-  // return h1;
 }
-
-void LeftistHeap::swap(LHNode* h1, LHNode* h2)
-{
-  LHNode* temp = h1;
-  h1=h2;
-  h2=temp;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//

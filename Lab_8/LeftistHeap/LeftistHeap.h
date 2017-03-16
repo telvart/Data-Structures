@@ -23,22 +23,15 @@ class LeftistHeap
     void levelOrder();
     bool isEmpty();
 
-  //private:
+  private:
 
-
-    LHNode* insert(int val, LHNode* subtree);
-    LHNode* minOfTree(LHNode* subtree);
     LHNode* merge(LHNode* h1, LHNode* h2);
-
-
-    void swap(LHNode* h1, LHNode* h2);
 
     void preOrder(LHNode* subtree);
     void inOrder(LHNode* subtree);
     void deleteTree(LHNode* subtree);
 
     LHNode* m_root;
-    int m_entries;
 
 };
 
