@@ -5,7 +5,10 @@ class SHNode
 {
   public:
 
-  private:
+  SHNode(int val);
+  int m_val;
+  SHNode* m_left;
+  SHNode* m_right;
 
 };
 

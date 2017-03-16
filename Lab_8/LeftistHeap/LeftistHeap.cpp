@@ -26,8 +26,7 @@ LeftistHeap::~LeftistHeap()
 
 void LeftistHeap::insert(int val)
 {
-  LHNode* temp = new LHNode(val);
-  m_root = merge(m_root, temp);
+  m_root = merge(m_root, new LHNode(val));
 }
 
 void LeftistHeap::deleteMin()
@@ -39,14 +38,14 @@ void LeftistHeap::deleteMin()
 
 void LeftistHeap::preOrder()
 {
-  std::cout<<"PRE ORDER: ";
+  std::cout<<"\nPRE ORDER: ";
   preOrder(m_root);
   std::cout<<"\n";
 }
 
 void LeftistHeap::inOrder()
 {
-  std::cout<<"IN ORDER: ";
+  std::cout<<"\nIN ORDER: ";
   inOrder(m_root);
   std::cout<<"\n";
 }
