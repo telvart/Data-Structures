@@ -32,7 +32,9 @@ void LeftistHeap::insert(int val)
 
 void LeftistHeap::deleteMin()
 {
+  LHNode* oldRoot = m_root;
   m_root = merge(m_root->m_left, m_root->m_right);
+  delete oldRoot;
 }
 
 void LeftistHeap::preOrder()
