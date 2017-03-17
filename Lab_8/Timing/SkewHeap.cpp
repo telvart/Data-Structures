@@ -33,6 +33,8 @@ void SkewHeap::insert(int val)
 
 void SkewHeap::deleteMin()
 {
+  if(m_root == nullptr) {return;}
+
   SHNode* oldRoot = m_root;
   m_root = merge(m_root->m_left, m_root->m_right);
   delete oldRoot;

@@ -7,9 +7,7 @@
 class Test
 {
 public:
-  double** buildTest();
-  double** operationsTest();
-  void runTests();
+  void runTest();
 };
 
 #endif
