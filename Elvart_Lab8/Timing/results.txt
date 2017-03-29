@@ -1,0 +1,208 @@
+tim@tim-pc:~/Github/EECS_560/Lab_8/Timing$ ./timing
+
+SEED: 0
+
+Test with n = 50000
+
+BUILD:
+Leftist Heap: 0.006207
+Skew Heap: 0.005396
+OPERATIONS
+Leftist Heap: 0.001177
+Skew Heap: 0.000961
+
+Test with n = 100000
+
+BUILD:
+Leftist Heap: 0.008299
+Skew Heap: 0.011647
+OPERATIONS
+Leftist Heap: 0.002922
+Skew Heap: 0.002306
+
+Test with n = 200000
+
+BUILD:
+Leftist Heap: 0.017735
+Skew Heap: 0.025452
+OPERATIONS
+Leftist Heap: 0.007577
+Skew Heap: 0.006054
+
+Test with n = 400000
+
+BUILD:
+Leftist Heap: 0.039894
+Skew Heap: 0.059336
+OPERATIONS
+Leftist Heap: 0.017516
+Skew Heap: 0.015946
+
+SEED: 1
+
+Test with n = 50000
+
+BUILD:
+Leftist Heap: 0.004253
+Skew Heap: 0.007494
+OPERATIONS
+Leftist Heap: 0.001916
+Skew Heap: 0.001405
+
+Test with n = 100000
+
+BUILD:
+Leftist Heap: 0.009719
+Skew Heap: 0.015621
+OPERATIONS
+Leftist Heap: 0.003683
+Skew Heap: 0.002995
+
+Test with n = 200000
+
+BUILD:
+Leftist Heap: 0.023553
+Skew Heap: 0.034872
+OPERATIONS
+Leftist Heap: 0.007302
+Skew Heap: 0.006398
+
+Test with n = 400000
+
+BUILD:
+Leftist Heap: 0.047513
+Skew Heap: 0.080144
+OPERATIONS
+Leftist Heap: 0.017507
+Skew Heap: 0.016065
+
+SEED: 2
+
+Test with n = 50000
+
+BUILD:
+Leftist Heap: 0.004219
+Skew Heap: 0.008011
+OPERATIONS
+Leftist Heap: 0.001797
+Skew Heap: 0.00135
+
+Test with n = 100000
+
+BUILD:
+Leftist Heap: 0.009388
+Skew Heap: 0.015667
+OPERATIONS
+Leftist Heap: 0.00369
+Skew Heap: 0.002991
+
+Test with n = 200000
+
+BUILD:
+Leftist Heap: 0.022617
+Skew Heap: 0.035289
+OPERATIONS
+Leftist Heap: 0.007289
+Skew Heap: 0.006387
+
+Test with n = 400000
+
+BUILD:
+Leftist Heap: 0.048199
+Skew Heap: 0.075672
+OPERATIONS
+Leftist Heap: 0.017674
+Skew Heap: 0.016028
+
+SEED: 3
+
+Test with n = 50000
+
+BUILD:
+Leftist Heap: 0.004348
+Skew Heap: 0.007215
+OPERATIONS
+Leftist Heap: 0.001817
+Skew Heap: 0.001413
+
+Test with n = 100000
+
+BUILD:
+Leftist Heap: 0.009439
+Skew Heap: 0.016354
+OPERATIONS
+Leftist Heap: 0.003606
+Skew Heap: 0.002947
+
+Test with n = 200000
+
+BUILD:
+Leftist Heap: 0.023241
+Skew Heap: 0.034855
+OPERATIONS
+Leftist Heap: 0.007286
+Skew Heap: 0.006853
+
+Test with n = 400000
+
+BUILD:
+Leftist Heap: 0.048709
+Skew Heap: 0.07637
+OPERATIONS
+Leftist Heap: 0.017509
+Skew Heap: 0.016142
+
+SEED: 4
+
+Test with n = 50000
+
+BUILD:
+Leftist Heap: 0.004105
+Skew Heap: 0.007697
+OPERATIONS
+Leftist Heap: 0.001829
+Skew Heap: 0.001364
+
+Test with n = 100000
+
+BUILD:
+Leftist Heap: 0.009863
+Skew Heap: 0.016211
+OPERATIONS
+Leftist Heap: 0.003615
+Skew Heap: 0.002999
+
+Test with n = 200000
+
+BUILD:
+Leftist Heap: 0.022813
+Skew Heap: 0.034899
+OPERATIONS
+Leftist Heap: 0.007363
+Skew Heap: 0.007179
+
+Test with n = 400000
+
+BUILD:
+Leftist Heap: 0.047141
+Skew Heap: 0.075116
+OPERATIONS
+Leftist Heap: 0.01771
+Skew Heap: 0.016139
+
+
+Average Build Results:
+n = 50000  Leftist Heap: 0.0046264 Skew Heap: 0.0071626
+n = 100000 Leftist Heap: 0.0093416 Skew Heap: 0.0151
+n = 200000 Leftist Heap: 0.0219918 Skew Heap: 0.0330734
+n = 400000 Leftist Heap: 0.0462912 Skew Heap: 0.0733276
+
+
+Average Operation Results:
+n = 50000  Leftist Heap: 0.0017072 Skew Heap: 0.0012986
+n = 100000 Leftist Heap: 0.0035032 Skew Heap: 0.0028476
+n = 200000 Leftist Heap: 0.0073634 Skew Heap: 0.0065742
+n = 400000 Leftist Heap: 0.0175832 Skew Heap: 0.016064
+
+
+Total time elapsed: 1.73933 seconds
