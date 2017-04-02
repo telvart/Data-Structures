@@ -6,10 +6,12 @@ class BNode
 {
   public:
 
-
-
-  private:
-
+    BNode(int val);
+    int m_order;
+    int m_key;
+    BNode* m_left;
+    BNode* m_right;
+    BNode* m_firstChild;
 
 
 };
