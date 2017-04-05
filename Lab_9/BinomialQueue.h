@@ -7,6 +7,7 @@
 
 #ifndef BINOMIALQUEUE_H
 #define BINOMIALQUEUE_H
+#define MAX_ORDER 64
 
 class BinomialQueue
 {
@@ -20,10 +21,10 @@ class BinomialQueue
 
 
   //private:
-    void merge(BNode* q1, BNode* q2, bool order0);
+    BNode* merge(BNode* q1, BNode* q2);
     bool mergeNeeded(BNode* newNode);
     BNode* m_root;
-    int binaryRepresentation[64];
+    BNode* m_BOrders[MAX_ORDER];
 
 
 
