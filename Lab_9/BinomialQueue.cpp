@@ -1,5 +1,5 @@
-#include "BinomialQueue.h"
 
+#include "BinomialQueue.h"
 
 BinomialQueue::BinomialQueue(std::string fileName)
 {
@@ -7,8 +7,8 @@ BinomialQueue::BinomialQueue(std::string fileName)
   std::ifstream fileIn(fileName);
   int value;
   m_root = nullptr;
-  for(int i=0; i<MAX_ORDER; i++){m_BOrders[i] = nullptr;}
 
+  for(int i=0; i<MAX_ORDER; i++){m_BOrders[i] = nullptr;}
 
   while(fileIn>>value)
   {
@@ -20,7 +20,10 @@ BinomialQueue::BinomialQueue(std::string fileName)
 
 BinomialQueue::~BinomialQueue()
 {
-
+  for(int i=0; i<MAX_ORDER; i++)
+  {
+    if(m_BOrders[i] != nullptr) {deleteQueue(m_BOrders[i]);}
+  }
 }
 
 void BinomialQueue::insert(int val)
@@ -37,7 +40,6 @@ void BinomialQueue::insert(int val)
       {
         mergeOccured = false;
         m_BOrders[currentOrder] = temp;
-        //if(m_BOrders[currentOrder+1] != nullptr) {m_BOrders[currentOrder+1]->m_left = m_BOrders[currentOrder];}
       }
       else
       {
@@ -47,7 +49,6 @@ void BinomialQueue::insert(int val)
       }
   } while(mergeOccured);
 
-
   linkRights();
   linkLefts();
   updateRoot();
@@ -56,14 +57,132 @@ void BinomialQueue::insert(int val)
 
 void BinomialQueue::deleteMin()
 {
+  if(m_root == nullptr) {return;}
 
+  unlinkOrders();
+
+  int order = m_root->m_order;
+  BNode** tempArray = new BNode*[order];
+  BNode* child = m_root->m_firstChild;
+
+  for(int i=0; child != nullptr; i++)
+  {
+    tempArray[i] = child;
+    child = child -> m_right;
+  }
+
+  delete m_root;
+  m_BOrders[order] = nullptr;
+
+  for(int i=0; i<order; i++)
+  {
+    BNode* temp = tempArray[i];
+    temp->m_left=temp;
+    temp->m_right = nullptr;
+    deleteHelper(temp);
+  }
+
+  delete[] tempArray;
+  linkRights();
+  linkLefts();
+  updateRoot();
+
+
+}
+
+void BinomialQueue::deleteHelper(BNode* q)
+{
+  int order = q -> m_order;
+  if(m_BOrders[order] == nullptr) {m_BOrders[order] = q;}
+  else
+  {
+    deleteHelper(merge(q, m_BOrders[order]));
+    m_BOrders[order] = nullptr;
+  }
 }
 
 void BinomialQueue::levelOrder()
 {
-
+  std::cout<<"\nLevel Order:\n\n";
+  for(int i=0; i<MAX_ORDER; i++)
+  {
+    if(m_BOrders[i] != nullptr)
+    {
+      subTraversal(m_BOrders[i]);
+      std::cout<<"---\n";
+    }
+  }
+  std::cout<<"\n";
 }
 
+void BinomialQueue::subTraversal(BNode* q)
+{
+  Queue<BNode*> queue1 = Queue<BNode*>();
+  Queue<BNode*> queue2 = Queue<BNode*>();
+
+  queue1.enqueue(q);
+
+  while(!queue1.isEmpty())
+  {
+    BNode* currentNode = queue1.dequeue();
+
+    if (currentNode != nullptr)
+    {
+      if (currentNode->m_firstChild != nullptr)
+      {
+        BNode* child = currentNode->m_firstChild;
+        do
+        {
+          queue2.enqueue(child);
+          child = child->m_right;
+        } while(child != nullptr);
+      }
+      std::cout<<currentNode->m_key<<" ";
+    }
+    if(queue1.isEmpty())
+    {
+      std::cout<<"\n";
+      while(!queue2.isEmpty())
+      {
+        queue1.enqueue(queue2.dequeue());
+      }
+    }
+  }
+}
+
+void BinomialQueue::deleteQueue(BNode* q)
+{
+  Queue<BNode*> queue1 = Queue<BNode*>();
+  Queue<BNode*> queue2 = Queue<BNode*>();
+
+  queue1.enqueue(q);
+
+  while(!queue1.isEmpty())
+  {
+    BNode* currentNode = queue1.dequeue();
+
+    if (currentNode != nullptr)
+    {
+      if (currentNode->m_firstChild != nullptr)
+      {
+        BNode* child = currentNode->m_firstChild;
+        do
+        {
+          queue2.enqueue(child);
+          child = child->m_right;
+        } while(child != nullptr);
+      }
+      delete currentNode;
+    }
+    if(queue1.isEmpty())
+    {
+      while(!queue2.isEmpty())
+      {
+        queue1.enqueue(queue2.dequeue());
+      }
+    }
+  }
+}
 void BinomialQueue::unlinkOrders()
 {
   for(int i=0; i<MAX_ORDER; i++)
@@ -73,7 +192,6 @@ void BinomialQueue::unlinkOrders()
     {
       temp->m_left = temp;
       temp->m_right = nullptr;
-
     }
   }
 }
@@ -108,6 +226,7 @@ void BinomialQueue::linkLefts()
       break;
     }
   }
+
   for(int i = MAX_ORDER-1; i>0; i--)
   {
     int prev;
@@ -116,8 +235,6 @@ void BinomialQueue::linkLefts()
       if(m_BOrders[i] != nullptr){m_BOrders[i]->m_left = m_BOrders[prev];}
     }
   }
-
-
 }
 
 int BinomialQueue::prevOrder(int order)

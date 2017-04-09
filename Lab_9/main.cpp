@@ -4,7 +4,8 @@
 
 void printMenu()
 {
-  std::cout<<"Please choose one of the following commands:"
+  std::cout<<"********************************************"
+           <<"\nPlease choose one of the following commands:"
            <<"\n1) Insert"
            <<"\n2) Delete Min"
            <<"\n3) Level Order"
@@ -24,7 +25,7 @@ int main(int argc, char** argv)
     switch(choice)
     {
       case 1:
-        std::cout<<"Enter a value to insert:";
+        std::cout<<"Enter a value to insert to the Binomial Queue:";
         std::cin>>value;
         q.insert(value);
         break;
@@ -34,7 +35,6 @@ int main(int argc, char** argv)
       case 3:
         q.levelOrder();
         break;
-
     }
   } while(choice != 4);
 }

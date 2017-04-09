@@ -2,8 +2,8 @@
 #include <fstream>
 #include <iostream>
 #include <string>
-#include <vector>
 #include "BNode.h"
+#include "Queue.h"
 
 #ifndef BINOMIALQUEUE_H
 #define BINOMIALQUEUE_H
@@ -21,13 +21,16 @@ class BinomialQueue
     void deleteMin();
     void levelOrder();
 
-
   private:
 
     void unlinkOrders();
     void linkRights();
     void linkLefts();
     void updateRoot();
+
+    void subTraversal(BNode* q);
+    void deleteQueue (BNode* q);
+    void deleteHelper(BNode* q);
 
     int nextOrder(int order);
     int prevOrder(int order);
@@ -36,12 +39,6 @@ class BinomialQueue
 
     BNode* m_root;
     BNode* m_BOrders[MAX_ORDER];
-
-
-
-//make a function that checks whether or not a merge is needed, if it is, continue
-//merging until no new merges are needed and the queue is finished
-
 };
 
 #endif
