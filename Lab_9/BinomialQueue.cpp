@@ -25,13 +25,8 @@ BinomialQueue::~BinomialQueue()
 
 void BinomialQueue::insert(int val)
 {
+  unlinkOrders();
   BNode* temp = new BNode(val);
-  int maxorder = 0;
-  for(int i=0; i<MAX_ORDER; i++)
-  {
-    if(m_BOrders[i] != nullptr) {maxorder=i;}
-  }
-
   int currentOrder;
   bool mergeOccured;
   do
@@ -42,77 +37,21 @@ void BinomialQueue::insert(int val)
       {
         mergeOccured = false;
         m_BOrders[currentOrder] = temp;
-        m_BOrders[currentOrder] -> m_right = m_BOrders[currentOrder+1];
-        if(m_BOrders[currentOrder+1] != nullptr) {m_BOrders[currentOrder+1]->m_left = m_BOrders[currentOrder];}
-        if(currentOrder == 0)
-        {
-          m_BOrders[currentOrder] ->m_left = m_BOrders[maxorder];
-        }
+        //if(m_BOrders[currentOrder+1] != nullptr) {m_BOrders[currentOrder+1]->m_left = m_BOrders[currentOrder];}
       }
       else
       {
-
+        temp = merge(temp, temp2);
+        mergeOccured = true;
+        m_BOrders[currentOrder]=nullptr;
       }
   } while(mergeOccured);
 
 
-  // do
-  // {
-  //   currentOrder = temp->m_order;
-  //   BNode* temp2 = m_BOrders[currentOrder];
-  //   if(temp2 == nullptr)
-  //   {
-  //     m_BOrders[currentOrder] = temp;
-  //     m_BOrders[currentOrder]->m_right = m_BOrders[currentOrder+1];
-  //     if(currentOrder != 0) {m_BOrders[currentOrder]->m_left = m_BOrders[currentOrder-1];}
-  //     mergeOccured = false;
-  //   }
-  //   else
-  //   {
-  //     m_BOrders[currentOrder] = nullptr;
-  //     temp = merge(temp,temp2);
-  //     mergeOccured = true;
-  //   }
-  //
-  // } while(mergeOccured);
+  linkRights();
+  linkLefts();
+  updateRoot();
 
-  m_root = m_BOrders[0];
-
-
-  // if(m_BOrders[0] == nullptr)
-  // {
-  //   m_BOrders[0] = temp;
-  // }
-  // else
-  // {
-  //   bool mergeOccured=false;
-  //   int currentOrder=0;
-  //   do
-  //   {
-  //     currentOrder = temp->m_order;
-  //     BNode* temp2 = m_BOrders[currentOrder];
-  //   } while(mergeOccured);
-
-
-  //
-  // int min;
-  // if(m_BOrders[0] != nullptr)
-  // {
-  //   min = m_BOrders[0]->m_key;
-  //   m_root = m_BOrders[0];
-  // }
-  // for(int i=0; i<MAX_ORDER; i++)
-  // {
-  //   if(m_BOrders[i] != nullptr)
-  //   {
-  //     m_BOrders[i]->m_right = m_BOrders[i+1];
-  //     if(m_BOrders[i]->m_key < min)
-  //     {
-  //       min = m_BOrders[i]->m_key;
-  //       m_root = m_BOrders[i];
-  //     }
-  //   }
-  // }
 }
 
 void BinomialQueue::deleteMin()
@@ -123,6 +62,110 @@ void BinomialQueue::deleteMin()
 void BinomialQueue::levelOrder()
 {
 
+}
+
+void BinomialQueue::unlinkOrders()
+{
+  for(int i=0; i<MAX_ORDER; i++)
+  {
+    BNode* temp = m_BOrders[i];
+    if(temp != nullptr)
+    {
+      temp->m_left = temp;
+      temp->m_right = nullptr;
+
+    }
+  }
+}
+void BinomialQueue::linkRights()
+{
+  for(int i=0; i<MAX_ORDER; i++)
+  {
+    int next;
+    if((next = nextOrder(i)) != -1)
+    {
+      if(m_BOrders[i] != nullptr) {m_BOrders[i]->m_right = m_BOrders[next];}
+    }
+  }
+}
+
+void BinomialQueue::linkLefts()
+{
+  int maxOrder = 0;
+  for(int i=0; i<MAX_ORDER; i++)
+  {
+    if(m_BOrders[i] != nullptr)
+    {
+      if(i > maxOrder) {maxOrder=i;}
+    }
+  }
+
+  for(int i=0; i<MAX_ORDER; i++)
+  {
+    if(m_BOrders[i] != nullptr)
+    {
+      m_BOrders[i]->m_left = m_BOrders[maxOrder];
+      break;
+    }
+  }
+  for(int i = MAX_ORDER-1; i>0; i--)
+  {
+    int prev;
+    if((prev = prevOrder(i)) != -1)
+    {
+      if(m_BOrders[i] != nullptr){m_BOrders[i]->m_left = m_BOrders[prev];}
+    }
+  }
+
+
+}
+
+int BinomialQueue::prevOrder(int order)
+{
+  if(order > 0)
+  {
+    for(int i = order-1; i>=0; i--)
+    {
+      if(m_BOrders[i]!=nullptr) {return i;}
+    }
+  }
+  return -1;
+}
+
+int BinomialQueue::nextOrder(int order)
+{
+  for(int i=order+1; i<MAX_ORDER; i++)
+  {
+    if(m_BOrders[i]!= nullptr) {return i;}
+  }
+  return -1;
+}
+
+void BinomialQueue::updateRoot()
+{
+  int minVal, minOrder;
+  for(int i=0; i<MAX_ORDER; i++)
+  {
+    if(m_BOrders[i] != nullptr)
+    {
+      minVal = m_BOrders[i]->m_key;
+      minOrder = i;
+      break;
+    }
+  }
+
+  for(int i=0; i<MAX_ORDER; i++)
+  {
+    if(m_BOrders[i] != nullptr)
+    {
+      if(m_BOrders[i]->m_key < minVal)
+      {
+        minOrder = i;
+        minVal = m_BOrders[i]->m_key;
+      }
+    }
+  }
+  m_root = m_BOrders[minOrder];
 }
 
 BNode* BinomialQueue::merge(BNode* q1, BNode* q2)
@@ -147,9 +190,4 @@ BNode* BinomialQueue::merge(BNode* q1, BNode* q2)
     q1->m_order += 1;
   }
   return q1;
-}
-
-bool BinomialQueue::mergeNeeded(BNode* newNode)
-{
-
 }

@@ -13,16 +13,27 @@ class BinomialQueue
 {
 
   public:
+
     BinomialQueue(std::string fileName);
     ~BinomialQueue();
+
     void insert(int val);
     void deleteMin();
     void levelOrder();
 
 
-  //private:
+  private:
+
+    void unlinkOrders();
+    void linkRights();
+    void linkLefts();
+    void updateRoot();
+
+    int nextOrder(int order);
+    int prevOrder(int order);
+
     BNode* merge(BNode* q1, BNode* q2);
-    bool mergeNeeded(BNode* newNode);
+
     BNode* m_root;
     BNode* m_BOrders[MAX_ORDER];
 
