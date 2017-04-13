@@ -3,19 +3,36 @@
 #define MSTSOLVER_H
 
 #include <string>
+#include <fstream>
+#include <iostream>
+#include "MinKHeap.h"
+
+struct edge{
+  int i, j, cost;
+  bool operator>(edge& rhs){
+    return this->cost > rhs.cost;
+  }
+  bool operator<(edge& rhs){
+    return this->cost < rhs.cost;
+  }
+};
 
 class MSTSolver
 {
   public:
-    MSTSolver(std::string fileName);
+    MSTSolver();
     ~MSTSolver();
 
-    void kruskalSolve(int** myMatrix);
-    void primSolve(int** myMatrix);
+    void run();
+    void kruskalSolve(int** myMatrix, int dim);
+    void primSolve(int** myMatrix, int dim);
 
 
   private:
+    void initializeSingleMatrix(int graphNum, int dim);
+    MinKHeap<edge> fillKruskalHeap(int** matrix, int dim);
     int*** adjacencyMatricies;
+    int* graphDimensions;
     int numGraphs;
 
 

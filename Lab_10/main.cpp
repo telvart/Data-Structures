@@ -1,7 +1,10 @@
 
 #include <iostream>
+#include "MSTSolver.h"
 
 int main(int argc, char** argv)
 {
-  std::cout<<"Hello, Minimum Spanning Tree!\n";
+  MSTSolver mst = MSTSolver();
+  mst.run();
+  return 0;
 }
