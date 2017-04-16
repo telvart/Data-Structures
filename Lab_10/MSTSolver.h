@@ -5,7 +5,9 @@
 #include <string>
 #include <fstream>
 #include <iostream>
+
 #include "MinKHeap.h"
+#include "DJSNode.h"
 
 struct edge{
   int i, j, cost;
@@ -30,10 +32,12 @@ class MSTSolver
 
   private:
     void initializeSingleMatrix(int graphNum, int dim);
+    void initializeDJS(int dim);
     MinKHeap<edge> fillKruskalHeap(int** matrix, int dim);
     int*** adjacencyMatricies;
     int* graphDimensions;
-    int numGraphs;
+    DJSNode** disjointArray;
+    int numGraphs, numEdges;
 
 
 };

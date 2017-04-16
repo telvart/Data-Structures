@@ -38,6 +38,20 @@ void MSTSolver::initializeSingleMatrix(int graphNum, int dim)
   }
 }
 
+void MSTSolver::initializeDJS(int dim)
+{
+  disjointArray = new DJSNode*[dim];
+  for(int i=1; i<= dim; i++)
+  {
+    DJSNode* temp = new DJSNode(i);
+    temp->rank = 0;
+    temp->vertex = i;
+    temp->parent = temp;
+    disjointArray[i] = temp;
+    std::cout<<disjointArray[i]->vertex<<"\n";
+  }
+}
+
 MSTSolver::~MSTSolver()
 {
 
@@ -51,7 +65,10 @@ void MSTSolver::run()
 void MSTSolver::kruskalSolve(int** myMatrix, int dim)
 {
   MinKHeap<edge> sortedEdges = fillKruskalHeap(myMatrix, dim);
-  edge possibleEdge = sortedEdges.deleteMin();
+  initializeDJS(dim);
+  //disjointArray = new DJSNode[dim];
+
+  //edge possibleEdge = sortedEdges.deleteMin();
   //a DJS data structure must be used. If DJS.find(i) != DJS.find(j)
   //then select the edge, otherwise it is rejected;
   //implement kruskal's algorithm
@@ -61,6 +78,7 @@ MinKHeap<edge> MSTSolver::fillKruskalHeap(int** matrix, int dim)
 {
   MinKHeap<edge> h = MinKHeap<edge>(3, 100);
   int cost;
+  numEdges = 0;
   for(int i=0; i<dim; i++)
   {
     for(int j=i; j<dim; j++)
@@ -72,6 +90,7 @@ MinKHeap<edge> MSTSolver::fillKruskalHeap(int** matrix, int dim)
         temp.j = j;
         temp.cost = cost;
         h.insert(temp);
+        numEdges++;
       }
     }
   }
