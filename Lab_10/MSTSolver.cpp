@@ -40,13 +40,13 @@ void MSTSolver::initializeSingleMatrix(int graphNum, int dim)
 
 void MSTSolver::initializeDJS(int dim)
 {
-  disjointArray = new DJSNode*[dim];
+  disjointArray = DJSNode*[dim];
   for(int i=1; i<= dim; i++)
   {
     DJSNode* temp = new DJSNode(i);
     temp->rank = 0;
     temp->vertex = i;
-    temp->parent = temp;
+    //temp->parent = temp;
     disjointArray[i] = temp;
     std::cout<<disjointArray[i]->vertex<<"\n";
   }
