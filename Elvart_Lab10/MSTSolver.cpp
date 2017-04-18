@@ -9,7 +9,7 @@ MSTSolver::MSTSolver(std::string fileName)
 
   adjacencyLists = new AdjList*[numGraphs];
 
-  for(int i=0; i<numGraphs; i++)
+  for(int i = 0; i < numGraphs; i++)
   {
    int curDim;
    fileIn >> curDim;
@@ -17,8 +17,8 @@ MSTSolver::MSTSolver(std::string fileName)
    int** temp = new int*[curDim];
    for(int l=0; l<curDim; l++) {temp[l] = new int[curDim];}
 
-   for(int j=0; j<curDim; j++){
-    for(int k=0; k<curDim; k++){
+   for(int j = 0; j < curDim; j++){
+    for(int k = 0; k < curDim; k++){
        fileIn >> temp[j][k];
       std::cout << temp[j][k] << " ";
     }
@@ -26,7 +26,7 @@ MSTSolver::MSTSolver(std::string fileName)
   }
      adjacencyLists[i] = new AdjList(curDim);
      adjacencyLists[i]->convertToList(temp);
-     for(int l=0; l<curDim; l++) {delete[] temp[l];}
+     for(int l = 0; l<curDim; l++) {delete[] temp[l];}
      delete[] temp;
 
    }
@@ -43,7 +43,7 @@ DJS::DJS(int verticies)
 {
   numVerticies = verticies;
   auxArray = new DJSNode*[numVerticies];
-  for(int i=0; i<numVerticies; i++)
+  for(int i = 0; i < numVerticies; i++)
   {
     DJSNode* temp = new DJSNode();
     temp->vertex = i;
@@ -55,7 +55,7 @@ DJS::DJS(int verticies)
 
 MSTSolver::~MSTSolver()
 {
-  for(int i=0; i<numGraphs; i++) {delete adjacencyLists[i];}
+  for(int i = 0; i < numGraphs; i++) {delete adjacencyLists[i];}
   delete[] adjacencyLists;
 }
 
@@ -66,15 +66,15 @@ AdjList::~AdjList()
 
 DJS::~DJS()
 {
-  for(int i=0; i<numVerticies; i++) {delete auxArray[i];}
+  for(int i = 0; i < numVerticies; i++) {delete auxArray[i];}
   delete[] auxArray;
 }
 
 void AdjList::convertToList(int** adjMatrix)
 {
   int cost;
-  for(int row=0; row<myDim; row++){
-    for(int col=0; col<myDim; col++){
+  for(int row = 0; row < myDim; row++){
+    for(int col = 0; col < myDim; col++){
       if((cost = adjMatrix[row][col]) != 0){
         listEntry e;
         e.cost=cost;
@@ -87,21 +87,19 @@ void AdjList::convertToList(int** adjMatrix)
 
 void MSTSolver::run()
 {
-  for(int i=0; i<numGraphs; i++)
+  for(int i = 1; i <= numGraphs; i++)
   {
-     std::cout<<"Graph: "<<i;
-     std::cout<<"\nKruskal: ";
-    kruskalSolve(adjacencyLists[i]);
+    std::cout<<"Graph: "<<i<<"\nKruskal: ";
+    kruskalSolve(adjacencyLists[i-1]);
     std::cout<<"\nPrim: ";
-    primSolve(adjacencyLists[i]);
+    primSolve(adjacencyLists[i-1]);
   }
 }
-
 
 void MSTSolver::kruskalSolve(AdjList* adjList)
 {
   DJS disjointSet = DJS(adjList->myDim);
-  MinKHeap<edge> sortedEdges = fillSortedEdges(adjList);
+  MinKHeap<edge> sortedEdges = fillKruskalHeap(adjList);
   std::vector<edge> solutionSet;
   int MSTsize = adjList->myDim-1;
   while(!sortedEdges.isEmpty() && (solutionSet.size() != MSTsize))
@@ -115,32 +113,98 @@ void MSTSolver::kruskalSolve(AdjList* adjList)
   }
   if(solutionSet.size() == MSTsize)
   {
-    for(int i=0; i<MSTsize; i++)
+    for(int i = 0; i < MSTsize; i++)
     {
       edge e = solutionSet.at(i);
       std::cout<<"("<<e.i<<", "<<e.j<<") ";
     }
   }
-  else
-  {
-    std::cout<<"A Minimal Spanning tree does not exist for this graph";
-  }
+  else {std::cout<<"A Minimal Spanning tree does not exist";}
 }
 
 void MSTSolver::primSolve(AdjList* adjList)
 {
-  std::cout<<"lol dude do this already\n";
+
+  std::vector<edge> Et;
+  std::vector<int> Vt;
+  Vt.push_back(0);
+  int verticies = adjList->myDim;
+
+  MinKHeap<edge> sortedEdges = buildPrimHeap(adjList);
+
+  while(!sortedEdges.isEmpty() && Vt.size() != verticies)
+  {
+    edge vw = sortedEdges.deleteMin();
+    Et.push_back(vw);
+    Vt.push_back(vw.j);
+    sortedEdges = updateHeap(sortedEdges, Vt, adjList);
+  }
+//TODO: check if was valid solution
+  for(int i = 0; i < Et.size(); i++)
+  {
+    edge e = Et.at(i);
+    std::cout<<"("<<e.i<<", "<<e.j<<") ";
+  }
+std::cout<<"\n";
 }
 
-MinKHeap<edge> MSTSolver::fillSortedEdges(AdjList* adjList)
+MinKHeap<edge> MSTSolver::updateHeap(MinKHeap<edge> h, std::vector<int> visited, AdjList* graph)
+{
+  while(!h.isEmpty()) {h.deleteMin();}
+  int dim = graph->myDim;
+  for(int i = 0; i < dim; i++)
+  {
+    if(setContains(visited, i)) // if x is visited
+    {
+      for(int j = 0; j < graph->theList[i].m_size; j++) //for all adjacent to x
+       {
+        listEntry e = graph->theList[i].at(j);
+        if(!setContains(visited, e.vertex))
+        {
+          edge temp;
+          temp.i = i;
+          temp.j = e.vertex;
+          temp.cost = e.cost;
+          h.insert(temp);
+        }
+       }
+     }
+  }
+  return h;
+}
+
+bool MSTSolver::setContains(std::vector<int> set, int check)
+{
+  for(int i = 0; i < set.size(); i++)
+  {
+    if(set[i] == check) {return true;}
+  }
+  return false;
+}
+
+MinKHeap<edge> MSTSolver::buildPrimHeap(AdjList* list)
 {
   MinKHeap<edge> h = MinKHeap<edge>(3, 200);
-
-  for(int i=0; i<adjList->myDim; i++)
+  for(int i = 0; i < list->theList[0].m_size; i++)
   {
-    while(!adjList->theList[i].isEmpty())
+    listEntry e = list->theList[0].at(i);
+    edge temp;
+    temp.i = 0;
+    temp.j = e.vertex;
+    temp.cost = e.cost;
+    h.insert(temp);
+  }
+  return h;
+}
+
+MinKHeap<edge> MSTSolver::fillKruskalHeap(AdjList* adjList)
+{
+  MinKHeap<edge> h = MinKHeap<edge>(3, 200);
+  for(int i = 0; i < adjList->myDim; i++)
+  {
+    for(int j = 0; j < adjList->theList[i].m_size; j++)
     {
-      listEntry e = adjList->theList[i].pop();
+      listEntry e = adjList->theList[i].at(j);
       if(e.vertex < i)
       {
         edge temp;
@@ -170,7 +234,6 @@ DJSNode* DJS::find(int vertex)
     temp->parent = start;
   }
   return start;
-
 }
 
 void DJS::join(DJSNode* n1, DJSNode* n2)

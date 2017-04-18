@@ -41,7 +41,7 @@ MinKHeap<T>::MinKHeap(int k, int size, std::string fileName)
 template <typename T>
 MinKHeap<T>::~MinKHeap()
 {
-  delete[] theHeap;
+  //delete[] theHeap;
 }
 
 template <typename T>
@@ -76,12 +76,21 @@ void MinKHeap<T>::upHeap(int index)
 template <typename T>
 T MinKHeap<T>::deleteMin()
 {
-  T temp = theHeap[0];
-  theHeap[0]=theHeap[m_entries-1];
-  theHeap[m_entries-1]=T();
-  m_entries--;
-  heapify(0);
-  return temp;
+  T pop = theHeap[0];
+  if(m_entries>1)
+  {
+    theHeap[0]=theHeap[m_entries-1];
+    theHeap[m_entries-1]=T();
+    m_entries--;
+    heapify(0);
+  }
+  else
+  {
+    theHeap[0] = T();
+    m_entries--;
+  }
+
+  return pop;
 }
 
 template <typename T>

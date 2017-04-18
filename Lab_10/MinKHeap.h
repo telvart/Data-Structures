@@ -20,6 +20,12 @@ class MinKHeap
     void deleteMax();
     void removeVal(T val);
     void levelOrder();
+    bool isEmpty(){
+      return m_entries==0;
+    }
+    int size(){
+      return m_entries;
+    }
 
   private:
 

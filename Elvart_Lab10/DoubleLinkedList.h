@@ -50,6 +50,16 @@ public:
      @return the value at the front of the list, if list is empty, default constructor for T returned */
   T pop();
 
+  T at(int index){
+    T returnVal;
+    Node<T>* trav = m_front;
+    for(int i=0; i<index; i++)
+    {
+      trav = trav->getNext();
+    }
+    return trav->getData();
+  }
+
   bool search(T value);
 //private:
 

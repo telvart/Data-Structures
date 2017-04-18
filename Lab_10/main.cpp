@@ -4,7 +4,7 @@
 
 int main(int argc, char** argv)
 {
-  MSTSolver mst = MSTSolver();
-  mst.run();
-  return 0;
+ MSTSolver m = MSTSolver("data.txt");
+ m.run();
+
 }

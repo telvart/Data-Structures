@@ -29,7 +29,6 @@ struct edge{
   }
 };
 
-
 class AdjList{
 
 public:
@@ -50,13 +49,10 @@ public:
 class DJS{
 public:
 
-
   DJS(int verticies);
   ~DJS();
   DJSNode* find(int vertex);
   void join(DJSNode* n1, DJSNode* n2);
-
-
 
   int numVerticies;
   DJSNode** auxArray;
@@ -74,14 +70,17 @@ private:
 
   void kruskalSolve(AdjList* adjList);
   void primSolve(AdjList* adjList);
+  MinKHeap<edge> updateHeap(MinKHeap<edge> h, std::vector<int> visited, AdjList* graph);
+  bool setContains(std::vector<int> set, int check);
 
-  MinKHeap<edge> fillSortedEdges(AdjList* adjList);
+  MinKHeap<edge> fillKruskalHeap(AdjList* adjList);
+  MinKHeap<edge> buildPrimHeap(AdjList* list);
+
+
 
   AdjList** adjacencyLists;
   int numGraphs;
 
 };
-
-
 
 #endif

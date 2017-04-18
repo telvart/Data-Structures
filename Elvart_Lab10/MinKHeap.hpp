@@ -41,7 +41,7 @@ MinKHeap<T>::MinKHeap(int k, int size, std::string fileName)
 template <typename T>
 MinKHeap<T>::~MinKHeap()
 {
-  delete[] theHeap;
+  //delete[] theHeap;
 }
 
 template <typename T>
