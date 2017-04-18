@@ -16,10 +16,16 @@ class MinKHeap
     MinKHeap(int k, int size, std::string fileName);
     ~MinKHeap();
     void insert(T val);
-    void deleteMin();
+    T deleteMin();
     void deleteMax();
     void removeVal(T val);
     void levelOrder();
+    bool isEmpty(){
+      return m_entries==0;
+    }
+    int size(){
+      return m_entries;
+    }
 
   private:
 

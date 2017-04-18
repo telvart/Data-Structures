@@ -5,11 +5,15 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <vector>
 #include "MinKHeap.h"
 #include "DoubleLinkedList.h"
 
 struct listEntry{
   int vertex, cost;
+  bool operator==(listEntry& rhs){
+    return this->vertex == rhs.vertex && this->cost == rhs.cost;
+  }
 };
 
 struct edge{
@@ -20,7 +24,11 @@ struct edge{
   bool operator<(edge& rhs){
     return this->cost < rhs.cost;
   }
+  bool operator==(edge& rhs){
+    return this->cost == rhs.cost;
+  }
 };
+
 
 class AdjList{
 
@@ -28,10 +36,31 @@ public:
   AdjList(int dimension);
   ~AdjList();
   void convertToList(int** adjMatrix);
-
   DoubleLinkedList<listEntry>* theList;
+  int myDim;
 };
 
+class DJSNode{
+public:
+  DJSNode(){}
+  int vertex, rank;
+  DJSNode* parent;
+};
+
+class DJS{
+public:
+
+
+  DJS(int verticies);
+  ~DJS();
+  DJSNode* find(int vertex);
+  void join(DJSNode* n1, DJSNode* n2);
+
+
+
+  int numVerticies;
+  DJSNode** auxArray;
+};
 
 class MSTSolver{
 
@@ -43,10 +72,10 @@ public:
 
 private:
 
-  void kruskalSolve(DoubleLinkedList<listEntry> adjList);
-  void primSolve(DoubleLinkedList<listEntry> adjList);
+  void kruskalSolve(AdjList* adjList);
+  void primSolve(AdjList* adjList);
 
-  MinKHeap<edge> fillSortedEdges(DoubleLinkedList<listEntry> adjList, int dimension);
+  MinKHeap<edge> fillSortedEdges(AdjList* adjList);
 
   AdjList** adjacencyLists;
   int numGraphs;

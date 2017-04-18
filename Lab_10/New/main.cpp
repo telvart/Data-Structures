@@ -5,5 +5,6 @@
 int main(int argc, char** argv)
 {
  MSTSolver m = MSTSolver("data.txt");
+ m.run();
 
 }
