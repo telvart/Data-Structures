@@ -25,7 +25,8 @@ struct edge{
     return this->cost < rhs.cost;
   }
   bool operator==(edge& rhs){
-    return (this->i + this->j) == (rhs.i + rhs.j);
+    return (this->i + this->j) == (rhs.i + rhs.j)
+            && (this->cost == rhs.cost);
   }
 };
 

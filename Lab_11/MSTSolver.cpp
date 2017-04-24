@@ -78,9 +78,12 @@ DJS::~DJS()
 void AdjList::convertToList(int** adjMatrix)
 {
   int cost;
-  for(int row = 0; row < myDim; row++){
-    for(int col = 0; col < myDim; col++){
-      if((cost = adjMatrix[row][col]) != 0){
+  for(int row = 0; row < myDim; row++)
+  {
+    for(int col = 0; col < myDim; col++)
+    {
+      if((cost = adjMatrix[row][col]) != 0)
+      {
         listEntry e;
         e.cost=cost;
         e.vertex=col;
@@ -108,12 +111,10 @@ int MSTSolver::kruskalSolve(AdjList* adjList)
   std::vector<edge> solutionSet;
   int MSTsize = adjList->myDim-1;
   int mstCost = 0;
-  std::cout<<sortedEdges.size()<<"\n";
 
   while(!sortedEdges.isEmpty() && (solutionSet.size() != MSTsize))
   {
     edge candidate = sortedEdges.deleteMin();
-  //  std::cout<<"y\n";
     if(disjointSet.find(candidate.i) != disjointSet.find(candidate.j))
     {
       mstCost += candidate.cost;
@@ -210,15 +211,15 @@ MinKHeap<edge> MSTSolver::buildPrimHeap(AdjList* list)
 MinKHeap<edge> MSTSolver::fillKruskalHeap(AdjList* adjList)
 {
   MinKHeap<edge> h = MinKHeap<edge>(3, 10000);
-  for(int i = 0; i < adjList->myDim; i++)
+  for(int row = 0; row < adjList->myDim; row++)
   {
-    for(int j = 0; j < adjList->theList[i].m_size; j++)
+    for(int j = 0; j < adjList->theList[row].m_size; j++)
     {
-      listEntry e = adjList->theList[i].at(j);
-      if(e.vertex < i)
+      listEntry e = adjList->theList[row].at(j);
+      if(e.vertex < row)
       {
         edge temp;
-        temp.i = i;
+        temp.i = row;
         temp.j = e.vertex;
         temp.cost = e.cost;
         h.insert(temp);
