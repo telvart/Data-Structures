@@ -25,7 +25,7 @@ struct edge{
     return this->cost < rhs.cost;
   }
   bool operator==(edge& rhs){
-    return this->cost == rhs.cost;
+    return (this->i + this->j) == (rhs.i + rhs.j);
   }
 };
 
@@ -72,7 +72,7 @@ public:
 private:
 
 
-  MinKHeap<edge> updateHeap(MinKHeap<edge> h, std::vector<int> visited, AdjList* graph);
+  MinKHeap<edge> updateHeap(MinKHeap<edge> h, std::vector<edge> Et, std::vector<int> visited, AdjList* graph);
   bool setContains(std::vector<int> set, int check);
 
   MinKHeap<edge> fillKruskalHeap(AdjList* adjList);

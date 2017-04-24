@@ -139,11 +139,14 @@ int MSTSolver::primSolve(AdjList* adjList)
 
   while(!sortedEdges.isEmpty() && Vt.size() != verticies)
   {
+
     edge vw = sortedEdges.deleteMin();
+    std::cout<<sortedEdges.size()<<"\n";
     mstCost += vw.cost;
     Et.push_back(vw);
     Vt.push_back(vw.j);
-    sortedEdges = updateHeap(sortedEdges, Vt, adjList);
+    sortedEdges = updateHeap(sortedEdges, Et, Vt, adjList);
+    std::cout<<sortedEdges.size()<<"\n";
   }
 
   if(Vt.size() == verticies) {return mstCost;}
@@ -151,8 +154,9 @@ int MSTSolver::primSolve(AdjList* adjList)
 
 }
 
-MinKHeap<edge> MSTSolver::updateHeap(MinKHeap<edge> h, std::vector<int> visited, AdjList* graph)
+MinKHeap<edge> MSTSolver::updateHeap(MinKHeap<edge> h, std::vector<edge> Et, std::vector<int> visited, AdjList* graph)
 {
+
   while(!h.isEmpty()) {h.deleteMin();}
   int dim = graph->myDim;
   for(int i = 0; i < dim; i++)
@@ -168,7 +172,13 @@ MinKHeap<edge> MSTSolver::updateHeap(MinKHeap<edge> h, std::vector<int> visited,
           temp.i = i;
           temp.j = e.vertex;
           temp.cost = e.cost;
-          h.insert(temp);
+          bool shouldInsert = true;
+          for(int i=0; i<Et.size(); i++)
+          {
+            if(Et[i] == temp) {shouldInsert = false;}
+          }
+          if(shouldInsert) {h.insert(temp);}
+
         }
        }
      }
@@ -187,7 +197,7 @@ bool MSTSolver::setContains(std::vector<int> set, int check)
 
 MinKHeap<edge> MSTSolver::buildPrimHeap(AdjList* list)
 {
-  MinKHeap<edge> h = MinKHeap<edge>(3, 200);
+  MinKHeap<edge> h = MinKHeap<edge>(3, 10000);
   for(int i = 0; i < list->theList[0].m_size; i++)
   {
     listEntry e = list->theList[0].at(i);
@@ -202,7 +212,7 @@ MinKHeap<edge> MSTSolver::buildPrimHeap(AdjList* list)
 
 MinKHeap<edge> MSTSolver::fillKruskalHeap(AdjList* adjList)
 {
-  MinKHeap<edge> h = MinKHeap<edge>(3, 200);
+  MinKHeap<edge> h = MinKHeap<edge>(3, 10000);
   for(int i = 0; i < adjList->myDim; i++)
   {
     for(int j = 0; j < adjList->theList[i].m_size; j++)
@@ -224,24 +234,24 @@ MinKHeap<edge> MSTSolver::fillKruskalHeap(AdjList* adjList)
 DJSNode* DJS::find(int vertex)
 {
   DJSNode* start = auxArray[vertex];
-  //DoubleLinkedList<DJSNode*> pathCompress = DoubleLinkedList<DJSNode*>();
+  DoubleLinkedList<DJSNode*> pathCompress = DoubleLinkedList<DJSNode*>();
   while(start -> parent != start)
   {
     start = start->parent;
-  //  pathCompress.insert(start);
+    pathCompress.insert(start);
   }
 
-  // while(!pathCompress.isEmpty())
-  // {
-  //   DJSNode* temp = pathCompress.pop();
-  //   temp->parent = start;
-  // }
+  while(!pathCompress.isEmpty())
+  {
+    DJSNode* temp = pathCompress.pop();
+    temp->parent = start;
+  }
   return start;
 }
 
 void DJS::join(DJSNode* n1, DJSNode* n2)
 {
-  std::cout<<"join\n";
+  // std::cout<<"join\n";
   if(n1->rank == n2->rank)
   {
     n2->rank++;
