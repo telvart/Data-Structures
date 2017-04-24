@@ -139,14 +139,11 @@ int MSTSolver::primSolve(AdjList* adjList)
 
   while(!sortedEdges.isEmpty() && Vt.size() != verticies)
   {
-
     edge vw = sortedEdges.deleteMin();
-    std::cout<<sortedEdges.size()<<"\n";
     mstCost += vw.cost;
     Et.push_back(vw);
     Vt.push_back(vw.j);
     sortedEdges = updateHeap(sortedEdges, Et, Vt, adjList);
-    std::cout<<sortedEdges.size()<<"\n";
   }
 
   if(Vt.size() == verticies) {return mstCost;}
@@ -157,7 +154,7 @@ int MSTSolver::primSolve(AdjList* adjList)
 MinKHeap<edge> MSTSolver::updateHeap(MinKHeap<edge> h, std::vector<edge> Et, std::vector<int> visited, AdjList* graph)
 {
 
-  while(!h.isEmpty()) {h.deleteMin();}
+//  while(!h.isEmpty()) {h.deleteMin();}
   int dim = graph->myDim;
   for(int i = 0; i < dim; i++)
   {
@@ -221,8 +218,8 @@ MinKHeap<edge> MSTSolver::fillKruskalHeap(AdjList* adjList)
       if(e.vertex < i)
       {
         edge temp;
-        temp.i = e.vertex;
-        temp.j = i;
+        temp.i = i;
+        temp.j = e.vertex;
         temp.cost = e.cost;
         h.insert(temp);
       }

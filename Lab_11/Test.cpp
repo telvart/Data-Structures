@@ -33,9 +33,9 @@ timer.start();
 kCost = mst.kruskalSolve(graph);
 kTime = timer.stop();
 std::cout<<"\nKruskal-> Cost: "<<kCost<<" Time: "<<kTime<<"\n";
- // timer.start();
- // pCost = mst.primSolve(graph);
- // pTime = timer.stop();
+ timer.start();
+ pCost = mst.primSolve(graph);
+ pTime = timer.stop();
 
 
 std::cout<<"\nPrim   -> Cost: "<<pCost<<" Time: "<< pTime<<"\n";
