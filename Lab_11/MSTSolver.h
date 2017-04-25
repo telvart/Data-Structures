@@ -25,19 +25,8 @@ struct edge{
     return this->cost < rhs.cost;
   }
   bool operator==(edge& rhs){
-    return (this->i + this->j) == (rhs.i + rhs.j)
-            && (this->cost == rhs.cost);
+    return (this->i == rhs.i) && (this->j == rhs.j) && (this->cost == rhs.cost);
   }
-};
-
-class AdjList{
-
-public:
-  AdjList(int dimension);
-  ~AdjList();
-  void convertToList(int** adjMatrix);
-  DoubleLinkedList<listEntry>* theList;
-  int myDim;
 };
 
 class DJSNode{
@@ -62,26 +51,22 @@ public:
 class MSTSolver{
 
 public:
-
-  MSTSolver(std::string fileName);
   MSTSolver();
   ~MSTSolver();
   void run();
-  int kruskalSolve(AdjList* adjList);
-  int primSolve(AdjList* adjList);
+  int kruskalSolve(int** matrix, int dimension);
+  int primSolve(int** matrix, int dimension);
 
 private:
 
 
-  MinKHeap<edge> updateHeap(MinKHeap<edge> h, std::vector<edge> Et, std::vector<int> visited, AdjList* graph);
+  void updateHeap(int** matrix, int dimension, std::vector<int> visited,
+     std::vector<edge> MSTEdges, MinKHeap<edge>* heap);
   bool setContains(std::vector<int> set, int check);
 
-  MinKHeap<edge> fillKruskalHeap(AdjList* adjList);
-  MinKHeap<edge> buildPrimHeap(AdjList* list);
+  MinKHeap<edge> fillKruskalHeap(int** matrix, int dimension);
+  MinKHeap<edge>* buildPrimHeap(int** matrix, int dimension);
 
-
-
-  AdjList** adjacencyLists;
   int numGraphs;
 
 };

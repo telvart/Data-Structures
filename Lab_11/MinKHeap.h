@@ -27,7 +27,7 @@ class MinKHeap
       return m_entries;
     }
 
-  private:
+  //private:
 
     int parent(int index);
     int child(int parent, int childNum);
