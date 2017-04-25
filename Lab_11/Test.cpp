@@ -43,14 +43,14 @@ for(int seed = 1; seed<21; seed++){
   double kTime;
   int kCost;
 
-  std::cout<<"N: "<<n<<" SEED: "<<seed<<"\n";
+  std::cout<<"\nN: "<<n<<" SEED: "<<seed<<"\n";
 
   timer.start();
   kCost = mst.kruskalSolve(graph, n);
   kTime = timer.stop();
-  
+
   if(seed%5 == 0) {n *= 2;}
-  std::cout<<"Kruskal -> Cost:"<< kCost <<" Time: "<<kTime<<"\n";
+  std::cout<<"Cost:"<< kCost <<"\nTime: "<<kTime<<"\n";
 
 
 
